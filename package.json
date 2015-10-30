@@ -21,6 +21,7 @@
     "debug": "^2.2.0",
     "delegates": "^0.1.0",
     "drachtio": "git+ssh://git@github.com:davehorton/drachtio.git",
+    "drachtio-srf": "git+ssh://git@github.com:davehorton/drachtio-srf.git",
     "lodash": "^3.10.1",
     "modesl": "^1.1.5",
     "node-noop": "0.0.1",
@@ -32,6 +33,11 @@
     "minimist": "^1.1.0",
     "mocha": "~2.1.0",
     "should": "~2.1.1",
-    "async": "~0.9.0"
+    "async": "~0.9.0",
+    "grunt": "~0.4.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-nodeunit": "*",    
+    "grunt-jsdoc": "^1.0.0"        
   }
 }

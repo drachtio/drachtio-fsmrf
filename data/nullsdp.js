@@ -2,15 +2,14 @@ exports = module.exports = produceSdp ;
 
 function produceSdp( address, port ) {
 
-  var sdp = 'v=0\n' +
-    'o=‐ 1231232312312312312 123123123123123123 IN IP4 {{ip-address}}\n' + 
-    's=drachtio null session\n' +
-    'c=IN IP4 0.0.0.0\n' +
-    't=0 0\n' +
-    'm=audio {{port}} RTP/AVP 0\n' +
-    'a=rtpmap:0 pcmu/8000\n' +
-    'a=ptime:20\n' +
-    'a=inactive' ;
+  var sdp = ['v=0', 
+    'o=- 1111 0 IN IP4 {{ip-address}}',
+    's=drachtio session',
+    'c=IN IP4 0.0.0.0',
+    't=0 0',
+    'm=audio 50000 RTP/AVP 0',
+    'a=inactive\r\n'] ;
 
-  return sdp.replace('{{ip-address}}', address).replace('{{port}}', port) ;
+  return sdp.join('\r\n').replace('{{ip-address}}', address).replace('{{port}}', port) ;
 }
+
