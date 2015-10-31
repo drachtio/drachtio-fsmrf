@@ -35,6 +35,8 @@ var ConferenceConnection = require('./conference-connection') ;
 var util = require('util') ;
 var only = require('only') ;
 var _ = require('lodash') ;
+var fs = require('fs') ;
+var path = require('path') ;
 var async = require('async') ;
 var debug = require('debug')('drachtio-fsmrf') ;
 
@@ -50,10 +52,16 @@ var State = {
  * @param {esl.Connection} conn - outbound connection from a media server for one session
  * @param {MediaServer}   ms - MediaServer that contains this Endpoint
  * @param {object}   app - drachtio app
+ * @param {Endpoint~createOptions} [opts] configuration options
  * @param {Endpoint~createCallback} cb   callback that is invoked when the endpoint is connected and ready for use
  */
 function Endpoint( conn, ms, app, opts, cb ) {
   Emitter.call(this); 
+
+  if( typeof opts === 'function') {
+    cb = opts ;
+    opts = {} ;
+  }
 
   this._conn = conn ;
   this._ms = ms ;
@@ -61,7 +69,7 @@ function Endpoint( conn, ms, app, opts, cb ) {
   this._dialog = null ;
   this._executeCallbacks = {} ;
 
-  this.uuid = conn.getInfo().getHeader('Core-UUID') ;
+  this.uuid = conn.getInfo().getHeader('Channel-Unique-ID') ;
 
   /**
    * defines the local network connection of the Endpoint
@@ -80,6 +88,19 @@ function Endpoint( conn, ms, app, opts, cb ) {
   this.sip = {} ;
   this.state = State.NOT_CONNECTED ;
 
+  if( opts.debugDir ) {
+    this.logger = fs.createWriteStream(path.join(opts.debugDir, 'endpoint-' + this.uuid + '.txt' ) ) ;
+    var origWrite = conn.socket.write ;
+    conn.socket.write = function(data) {
+      this.emit.call(this, 'write', data) ;
+      return origWrite.apply( this, arguments) ;
+    } ;
+
+    conn.socket.on('data', this._onSocketRead.bind( this ) ) ;
+    conn.socket.on('write', this._onSocketWrite.bind( this ) ) ;
+  }
+
+
   this._conn.subscribe('all') ;
  
   this._conn.on('esl::event::CHANNEL_ANSWER::*', this._onAnswer.bind(this, cb)) ;
@@ -87,8 +108,12 @@ function Endpoint( conn, ms, app, opts, cb ) {
   this._conn.on('esl::event::CHANNEL_HANGUP::*', this._onHangup.bind(this)) ;
   this._conn.on('error', this._onError.bind(this)) ;
 
-  if( opts.codecs.length > 0 ) {
-    this._conn.execute('set', 'codec_string=' + opts.codecs.join(',')) ;
+  if( opts.codecs ) {
+    if( typeof opts.codecs === 'string') { opts.codecs = [opts.codecs]; }
+
+    if( opts.codecs.length > 0 ) {
+      this._conn.execute('set', 'codec_string=' + opts.codecs.join(',')) ;
+    }
   }
 
   this._conn.execute('answer') ;
@@ -106,6 +131,14 @@ function Endpoint( conn, ms, app, opts, cb ) {
   }) ;
 
 }
+/**
+ * Options governing the creation of an Endpoint
+ * @typedef {Object} Endpoint~createOptions
+ * @property {string} [debugDir] directory into which message trace files; the presence of this param will enable debug tracing
+ * @property {string|array} [codecs] preferred codecs; array order indicates order of preference
+ * 
+ */
+
 /**
  * This callback is invoked when an endpoint has been created and is ready for commands.
  * @callback Endpoint~createCallback
@@ -455,9 +488,19 @@ Endpoint.prototype._onChannelExecute = function(evt) {
   var obj = this._executeCallbacks[eventUuid] ;
   if( !!obj ) {
     delete this._executeCallbacks[eventUuid] ;
-    obj.callback( null, new ConferenceConnection( this, obj.confName, obj.args ) );
+    debug('CHANNEL_EXECUTE from join conference: ') ;
+    var confConnection = new ConferenceConnection( this, obj.confName, obj.args )  ;
+    obj.callback( null, confConnection );
   }
 };
+
+Endpoint.prototype._onSocketRead = function(data) {
+  this.logger.write('&lt;= ' + data.toString(), 'utf8') ;
+} ;
+Endpoint.prototype._onSocketWrite = function(data) {
+  this.logger.write('=> ' + data.toString(), 'utf8') ;
+} ;
+
 
 //representation
 Endpoint.prototype.toJSON = function() {
@@ -470,7 +513,8 @@ Endpoint.prototype.toString = function() {
 delegate(Endpoint.prototype, '_conn')
   .method('connected') 
   .method('api')
-  .method('execute') ;
+  .method('execute')
+  .method('filter') ;
 
 
 /**
@@ -493,13 +537,13 @@ delegate(Endpoint.prototype, '_conn')
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Conference.html">Conference</a></li><li><a href="Endpoint.html">Endpoint</a></li><li><a href="MediaServer.html">MediaServer</a></li><li><a href="Mrf.html">Mrf</a></li></ul><h3>Events</h3><ul><li><a href="MediaServer.html#event:connect">connect</a></li><li><a href="MediaServer.html#event:error">error</a></li><li><a href="MediaServer.html#event:ready">ready</a></li><li><a href="Mrf.html#event:error">error</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Conference.html">Conference</a></li><li><a href="ConferenceConnection.html">ConferenceConnection</a></li><li><a href="Endpoint.html">Endpoint</a></li><li><a href="MediaServer.html">MediaServer</a></li><li><a href="Mrf.html">Mrf</a></li></ul><h3>Events</h3><ul><li><a href="MediaServer.html#event:connect">connect</a></li><li><a href="MediaServer.html#event:error">error</a></li><li><a href="MediaServer.html#event:ready">ready</a></li><li><a href="Mrf.html#event:error">error</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Oct 29 2015 15:01:07 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Sat Oct 31 2015 13:08:16 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

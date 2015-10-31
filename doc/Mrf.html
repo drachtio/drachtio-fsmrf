@@ -42,7 +42,7 @@
 
     
 
-    <h4 class="name" id="Mrf"><span class="type-signature"></span>new Mrf<span class="signature">(app)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Mrf"><span class="type-signature"></span>new Mrf<span class="signature">(app, opts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -73,6 +73,8 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -98,10 +100,51 @@
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last">drachtio app</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>opts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Mrf.html#~createOptions">Mrf~createOptions</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">configuration options</td>
         </tr>
 
     
@@ -142,7 +185,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line14">line 14</a>
+        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -314,7 +357,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line45">line 45</a>
+        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -456,7 +499,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line76">line 76</a>
+        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -715,7 +758,141 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line86">line 86</a>
+        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line106">line 106</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+                
+<h4 class="name" id="~createOptions">createOptions</h4>
+
+
+
+
+<div class="description">
+    Options governing the creation of an mrf instance
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>debugDir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">directory into which message trace files; the presence of this param will enable debug tracing</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line45">line 45</a>
     </li></ul></dd>
     
 
@@ -855,7 +1032,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line95">line 95</a>
+        <a href="mrf.js.html">mrf.js</a>, <a href="mrf.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -893,13 +1070,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Conference.html">Conference</a></li><li><a href="Endpoint.html">Endpoint</a></li><li><a href="MediaServer.html">MediaServer</a></li><li><a href="Mrf.html">Mrf</a></li></ul><h3>Events</h3><ul><li><a href="MediaServer.html#event:connect">connect</a></li><li><a href="MediaServer.html#event:error">error</a></li><li><a href="MediaServer.html#event:ready">ready</a></li><li><a href="Mrf.html#event:error">error</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Conference.html">Conference</a></li><li><a href="ConferenceConnection.html">ConferenceConnection</a></li><li><a href="Endpoint.html">Endpoint</a></li><li><a href="MediaServer.html">MediaServer</a></li><li><a href="Mrf.html">Mrf</a></li></ul><h3>Events</h3><ul><li><a href="MediaServer.html#event:connect">connect</a></li><li><a href="MediaServer.html#event:error">error</a></li><li><a href="MediaServer.html#event:ready">ready</a></li><li><a href="Mrf.html#event:error">error</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Oct 29 2015 15:01:07 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Sat Oct 31 2015 13:08:16 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

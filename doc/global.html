@@ -94,6 +94,82 @@
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="confName"><span class="type-signature"></span>confName<span class="type-signature"> :string</span></h4>
+
+
+
+
+<div class="description">
+    name of the associated conference
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">string</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="conference-connection.js.html">conference-connection.js</a>, <a href="conference-connection.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -103,17 +179,14 @@
 
     
 
-    <h4 class="name" id="Conference"><span class="type-signature"></span>Conference<span class="signature">(endpoint, name, opts<span class="signature-attributes">opt</span>, cb)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ConferenceConnection"><span class="type-signature"></span>ConferenceConnection<span class="signature">(endpoint, confName, opts)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    an audio or video conference mixer.  Conferences may be created on the fly by simply joining an endpoint
-to a named conference without explicitly creating a Conference object.  The main prupose of the Conference
-object is to enable the ability to create a conference on the media server without having an inbound call
-(e.g., to create a scheduled conference at a particular point in time).
+    a connection between an Endpoint and a Conference
 </div>
 
 
@@ -136,8 +209,6 @@ object is to enable the ability to create a conference on the media server witho
 
         <th>Type</th>
 
-        
-        <th>Attributes</th>
         
 
         
@@ -164,49 +235,33 @@ object is to enable the ability to create a conference on the media server witho
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">endpoint that will provide the control connection to the conference</td>
+            <td class="description last">endpoint that is connected to the conference</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>confName</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">string</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">conference name</td>
+            <td class="description last">name of the conference</td>
         </tr>
 
     
@@ -219,58 +274,17 @@ object is to enable the ability to create a conference on the media server witho
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#Conference#~createOptions">Conference~createOptions</a></span>
+<span class="param-type"><a href="global.html#ConferenceConnection#~createOptions">ConferenceConnection~createOptions</a></span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last">conference-level configuration options</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>cb</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#Conference#~createCallback">Conference~createCallback</a></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">callback invoked when conference is created</td>
+            <td class="description last">configuration options</td>
         </tr>
 
     
@@ -311,7 +325,7 @@ object is to enable the ability to create a conference on the media server witho
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="conference.js.html">conference.js</a>, <a href="conference.js.html#line24">line 24</a>
+        <a href="conference-connection.js.html">conference-connection.js</a>, <a href="conference-connection.js.html#line13">line 13</a>
     </li></ul></dd>
     
 
@@ -353,13 +367,13 @@ object is to enable the ability to create a conference on the media server witho
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Endpoint.html">Endpoint</a></li><li><a href="MediaServer.html">MediaServer</a></li><li><a href="Mrf.html">Mrf</a></li></ul><h3>Events</h3><ul><li><a href="MediaServer.html#event:connect">connect</a></li><li><a href="MediaServer.html#event:error">error</a></li><li><a href="MediaServer.html#event:ready">ready</a></li><li><a href="Mrf.html#event:error">error</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Conference">Conference</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Conference.html">Conference</a></li><li><a href="Endpoint.html">Endpoint</a></li><li><a href="MediaServer.html">MediaServer</a></li><li><a href="Mrf.html">Mrf</a></li></ul><h3>Events</h3><ul><li><a href="MediaServer.html#event:connect">connect</a></li><li><a href="MediaServer.html#event:error">error</a></li><li><a href="MediaServer.html#event:ready">ready</a></li><li><a href="Mrf.html#event:error">error</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ConferenceConnection">ConferenceConnection</a></li><li><a href="global.html#confName">confName</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Oct 29 2015 14:57:59 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Sat Oct 31 2015 13:07:53 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
