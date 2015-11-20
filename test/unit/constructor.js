@@ -29,15 +29,6 @@ describe('MRF', function(){
     badConnect.should.throw() ;
   }) ;
 
-  it('should throw if #connect does not specify a callback', function(){
-    var badConnect = function() {
-      var mrf = new Mrf(app) ;
-      debug('calling connect') ;
-      mrf.connect({address: '127.0.0.1'}) ;
-    } ;
-    badConnect.should.throw() ;
-  }) ;
-
   it('should emit an error if connection fails', function(done){
     var mrf = new Mrf(app) ;
     mrf.connect({
