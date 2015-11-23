@@ -24,11 +24,43 @@
       <p>
         Welcome to the drachtio media resouree function, empowering nodejs/javascript developers to build rich media application on SIP / VoIP networks
       </p>
-      <p>drachtio is an open-source, nodejs-based ecosystem for creating any kind of VoIP server-based application: registrar, proxy, back-to-back user agent, and many others. Furthermore, when coupled with the drachtio <a href="https://github.com/davehorton/drachtio-fsmrf">media resource function</a>, rich media-processing applications can be easily built as well.
+      <p>drachtio is an open-source, nodejs-based ecosystem for creating any kind of VoIP server-based application: registrar, proxy, back-to-back user agent, and many others. Within the drachtio ecosystem, drachtio-fsmrf is a high-level media processing abstraction layer  that utilizes freeswitch as a media server and partners with the <a href="https://github.com/davehorton/drachtio-srf">drachtio signaling resource framework</a> to enable the creation of media-processing applications such as conferencing, IVR and others.
       </p>
-      <p>
-        Within the drachtio ecosystem, drachtio-fsmrf is a high-level media processing abstraction framework  that integrates with a freeswitch media server and partners with the <a href="https://github.com/davehorton/drachtio-srf">drachtio signaling resource framework</a>.
-      </p>
+
+      <p><strong>Note:</strong> API documentation for drachtio-srf <a href="http://davehorton.github.io/drachtio-srf/api/index.html">can be found here</a>.
+
+      <pre>
+var app = require('drachtio')() ;
+var Mrf = require('drachtio-fsmrf') ;
+var mrf = new Mrf(app) ;
+var Srf = require('drachtio-srf') ;
+var srf = new Srf(app) ;
+var ms  ;
+
+srf.connect({...}) ;
+mrf.connect({...}, function(mediaServer) {ms = mediaServer;}) ;
+
+srf.invite( function(req, res) {
+  
+  // connect caller to an enpoint on the media server
+  ms.connectCaller(req, res, function(err, ep, dialog) {
+    if( err ) thrown err ;
+
+    // set up dialog handlers
+    dialog.on('destroy', onCallerHangup.bind(dialog, ep)) ;
+
+    ep.play(['ivr/8000/ivr-please_reenter_your_pin.wav',
+      'ivr/8000/ivr-please_state_your_name_and_reason_for_calling.wav',
+      'ivr/8000/ivr-you_lose.wav'], function(err, results){
+        console.log('results: ', results) ;
+      }) ;
+  }) ; 
+}) ;
+
+function onCallerHangup( ep ) {
+  // release endpoint
+  ep.destroy() ;
+}</pre>
   
   </body>
 </html>
