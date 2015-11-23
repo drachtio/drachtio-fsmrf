@@ -22,12 +22,12 @@
       <div class="drachtio-img"><img src="http://davehorton.github.io/drachtio-fsmrf/img/definition-only-cropped.png">
       </div>
       <p>
-        Welcome to the drachtio media resouree function, empowering nodejs/javascript developers to build rich media application on SIP / VoIP networks
+        Welcome to the drachtio media resource function, empowering nodejs/javascript developers to build rich media application on SIP / VoIP networks
       </p>
-      <p>drachtio is an open-source, nodejs-based ecosystem for creating any kind of VoIP server-based application: registrar, proxy, back-to-back user agent, and many others. Within the drachtio ecosystem, drachtio-fsmrf is a high-level media processing abstraction layer  that utilizes freeswitch as a media server and partners with the <a href="https://github.com/davehorton/drachtio-srf">drachtio signaling resource framework</a> to enable the creation of media-processing applications such as conferencing, IVR and others.
+      <p>drachtio is an open-source, nodejs-based ecosystem for creating any kind of VoIP server-based application: registrar, proxy, back-to-back user agent, and many others. Within the drachtio ecosystem, drachtio-fsmrf is a high-level media processing abstraction layer  that utilizes freeswitch as a media server, and partners with the <a href="http://davehorton.github.io/drachtio-srf/">drachtio signaling resource framework</a> to enable the creation of media-processing applications such as conferencing, IVR and others.
       </p>
 
-      <p><strong>Note:</strong> API documentation for drachtio-srf <a href="http://davehorton.github.io/drachtio-srf/api/index.html">can be found here</a>.
+      <p><strong>Note:</strong> API documentation for drachtio-fsmrf <a href="http://davehorton.github.io/drachtio-fsmrf/api/index.html">can be found here</a>.
 
       <pre>
 var app = require('drachtio')() ;
@@ -42,13 +42,14 @@ mrf.connect({...}, function(mediaServer) {ms = mediaServer;}) ;
 
 srf.invite( function(req, res) {
   
-  // connect caller to an enpoint on the media server
+  // connect caller to an endpoint on the media server
   ms.connectCaller(req, res, function(err, ep, dialog) {
     if( err ) thrown err ;
 
     // set up dialog handlers
     dialog.on('destroy', onCallerHangup.bind(dialog, ep)) ;
 
+    // play some prompts
     ep.play(['ivr/8000/ivr-please_reenter_your_pin.wav',
       'ivr/8000/ivr-please_state_your_name_and_reason_for_calling.wav',
       'ivr/8000/ivr-you_lose.wav'], function(err, results){
