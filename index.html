@@ -62,6 +62,25 @@ function onCallerHangup( ep ) {
   // release endpoint
   ep.destroy() ;
 }</pre>
+
+      <h3>Getting Started</h3>
+      <p><strong>Note:</strong> drachtio-fsmrf applications require a network connection to a <a href="https://github.com/davehorton/drachtio-server">drachtio server</a> process that sits in the VoIP network and handles the low-level SIP messaging.
+      </p>
+      <p><strong>Additionally</strong>, drachtio-fsmrf applications require a freeswitch media server, configured as defined in the <a href="https://github.com/davehorton/drachtio-fs-ansible">drachtio-fs-ansible</a>, which provides an ansible role that can build up a freeswitch media server for use with drachtio-fsrmf from a vanilla ubuntu install.
+      </p>
+      <h4>Install drachtio-fsmrf</h4>
+      <p>
+        <pre>
+npm install drachtio-fsmrf --save</pre>
+      </p>
+      <h4>Create an instance of the media resource function</h4>
+        <p>First, create a drachtio "app".  This contains the middleware stack and core message routing functions needed for the core drachtio library that is central to all drachtio applications.  Next, create a new instance of the drachtio media resource function, passing the drachtio app that you just created.
+          <pre>
+var drachtio = require('drachtio') ;
+var app = drachtio();
+var Mrf = require('drachtio-fsmrf'); 
+var mrf = new Mrf(app) ;</pre>
+        </p>
   
   </body>
 </html>
