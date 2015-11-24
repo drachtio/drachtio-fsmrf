@@ -96,6 +96,8 @@ mrf.connect({
   port: 8021,           // freeswitch event socket listen port
   secret: 'ClueCon',    // freeswitch authentication secret
   listenPort: 8085      // leave at 8085; unless freeswitch dial plan is changed
+}, function(ms) {
+  console.log('connected to mediaserver: ', JSON.stringify(ms)) ;
 });</pre>
   
   </body>
