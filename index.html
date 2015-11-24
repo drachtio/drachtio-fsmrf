@@ -88,7 +88,7 @@ var Srf = require('drachtio-srf');
 var srf = new Srf(app) ;</pre>
         </p>
     <h4>Connect to one or more freeswitch media servers</h4>
-    <p>In order to create and manipulate <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">Endpoints</a>, <a href="http://davehorton.github.io/drachtio-fsmrf/api/Conference.html">Conferences</a> and other resources, you must first obtain a reference to an instance of a <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html">MediaServer</a>.  This is done by the 'mrf.connect' method:
+    <p>In order to create and manipulate <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">endpoints</a>, <a href="http://davehorton.github.io/drachtio-fsmrf/api/Conference.html">conferences</a> and other resources, you must first obtain a reference to an instance of a <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html">MediaServer</a>.  This is done by the 'mrf.connect' method:
     </p>
     <pre>
 mrf.connect({
@@ -100,13 +100,23 @@ mrf.connect({
   console.log('connected to mediaserver: ', JSON.stringify(ms)) ;
 });</pre>
   <h4>Allocate and manipulate resources on a media server</h4>
-  <p>Once you have obtained a reference to a media server, you can obtain access to resources via any of the following methods:
+  <p>Once you have obtained a reference to a media server, you can obtain access to resources on the media server via any of the following methods:
     <ul>
       <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createConference">MediaServer#createConference</a></li>
       <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createEndpoint">MediaServer#createEndpoint</a></li>
       <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#connectCaller">MediaServer#connectCaller</a></li>
     </ul>
     You can also send freeswitch api commands directly to the media server by invoking the <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#api">MediaServer#api</a> method.
+  </p>
+
+  <h4>IVR Features</h4>
+  <p>
+  Once you have an <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">endpoint</a>, and a connected SIP <a href="http://davehorton.github.io/drachtio-srf/api/Dialog.html">dialog</a>, you can create IVR interactions by calling methods on the endpoint:
+  <ul>
+    <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#play">Endpoint#play</a> - play one or more audio files</li>
+    <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#playCollect">Endpoint#playCollect</a> - play an audio file and collect DTMF input from the call</li>
+    <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#say">Endpoint#say</a> - speak a phrase, using a defined grammar</li>
+  </ul>
   </p>
   
   </body>
