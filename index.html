@@ -118,6 +118,14 @@ mrf.connect({
     <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#say">Endpoint#say</a> - speak a phrase, using a defined grammar</li>
   </ul>
   </p>
-  
+
+  <h4>Conferencing Features</h4>
+  <p>There are two ways to create a conference:
+    <ol>
+      <li>By calling <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createConference">MediaServer#createConference</a> which creates a named conference on the media server</li>
+      <li>By allocating an endpoint, and then calling <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#joinConference">Endpoint#joinConference</a>, to which you can either pass a previously allocated conference object, or simply the name of a conference.  In the latter case, a conference is dynamically created on the media server.</li>
+    </ol>
+  </p>
+
   </body>
 </html>
