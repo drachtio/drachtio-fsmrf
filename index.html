@@ -108,6 +108,8 @@ mrf.connect({
     </ul>
     You can also send freeswitch api commands directly to the media server by invoking the <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#api">MediaServer#api</a> method.
   </p>
+  <p>Once you are done working with an endpoint, you should call <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#destroy">Endpoint#destroy</a> to release it back to the media server.
+  </p>
 
   <h3>IVR Features</h3>
   <p>
