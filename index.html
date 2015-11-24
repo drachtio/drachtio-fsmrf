@@ -109,7 +109,7 @@ mrf.connect({
     You can also send freeswitch api commands directly to the media server by invoking the <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#api">MediaServer#api</a> method.
   </p>
 
-  <h4>IVR Features</h4>
+  <h3>IVR Features</h3>
   <p>
   Once you have an <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">endpoint</a>, and a connected SIP <a href="http://davehorton.github.io/drachtio-srf/api/Dialog.html">dialog</a>, you can create IVR interactions by calling methods on the endpoint:
   <ul>
@@ -119,13 +119,29 @@ mrf.connect({
   </ul>
   </p>
 
-  <h4>Conferencing Features</h4>
+  <h3>Conferencing Features</h3>
   <p>There are two ways to create a conference:
     <ol>
       <li>By calling <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createConference">MediaServer#createConference</a> which creates a named conference on the media server</li>
       <li>By allocating an endpoint, and then calling <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#joinConference">Endpoint#joinConference</a>, to which you can either pass a previously allocated conference object, or simply the name of a conference.  In the latter case, a conference is dynamically created on the media server.</li>
     </ol>
   </p>
+
+    <h3>Sample applications</h3>
+    <p>Besides the example applications found in the <a href="">examples</a> folder, the following full-fledged sample applications are available:
+      <ul>
+        <li><a href="https://github.com/davehorton/drachtio-sample-twostage-dialing">Two-stage dialing application</a></li>
+      </ul>
+    </p>
+
+    <h3>License</h3>
+      <a href="https://github.com/davehorton/drachtio-fsmrf/blob/master/LICENSE">MIT</a>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/davehorton/drachtio-fsmrf">drachtio-fsmrf</a> is maintained by <a href="https://github.com/davehorton">davehorton</a>.</span>
+      </footer>
+
+    </section>
 
   </body>
 </html>
