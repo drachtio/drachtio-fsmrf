@@ -99,6 +99,15 @@ mrf.connect({
 }, function(ms) {
   console.log('connected to mediaserver: ', JSON.stringify(ms)) ;
 });</pre>
+  <h4>Allocate and manipulate resources on a media server</h4>
+  <p>Once you have obtained a reference to a media server, you can obtain access to resources via any of the following methods:
+    <ul>
+      <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createConference">MediaServer#createConference</a></li>
+      <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createEndpoint">MediaServer#createEndpoint</a></li>
+      <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#connectCaller">MediaServer#connectCaller</a></li>
+    </ul>
+    You can also send freeswitch api commands directly to the media server by invoking the <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#api">MediaServer#api</a> method.
+  </p>
   
   </body>
 </html>
