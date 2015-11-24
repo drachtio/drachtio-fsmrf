@@ -66,7 +66,7 @@ function onCallerHangup( ep ) {
       <h3>Getting Started</h3>
       <p><strong>Note:</strong> drachtio-fsmrf applications require a network connection to a <a href="https://github.com/davehorton/drachtio-server">drachtio server</a> process that sits in the VoIP network and handles the low-level SIP messaging.
       </p>
-      <p><strong>Additionally</strong>, drachtio-fsmrf applications require a freeswitch media server, configured as defined in the <a href="https://github.com/davehorton/drachtio-fs-ansible">drachtio-fs-ansible</a>, which provides an ansible role that can build up a freeswitch media server for use with drachtio-fsrmf from a vanilla ubuntu install.
+      <p><strong>Additionally</strong>, drachtio-fsmrf applications require a freeswitch media server, configured as defined in the <a href="https://github.com/davehorton/drachtio-fs-ansible">drachtio-fs-ansible</a>, which provides an ansible role that can be used build up a freeswitch media server for use with drachtio-fsrmf from a vanilla ubuntu install.
       </p>
       <h4>Install drachtio-fsmrf</h4>
       <p>
@@ -81,6 +81,22 @@ var app = drachtio();
 var Mrf = require('drachtio-fsmrf'); 
 var mrf = new Mrf(app) ;</pre>
         </p>
+      <h4>Create an instance of the signaling resource framework</h4>
+        <p>In most cases, you will also want to create an instance of the <a href="http://davehorton.github.io/drachtio-srf/">drachtio signaling resource framework</a> as well, in order to handle the SIP signaling requirements of the application.
+          <pre>
+var Srf = require('drachtio-srf'); 
+var srf = new Srf(app) ;</pre>
+        </p>
+    <h4>Connect to one or more freeswitch media servers</h4>
+    <p>In order to create and manipulate <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">Endpoints</a>, <a href="http://davehorton.github.io/drachtio-fsmrf/api/Conference.html">Conferences</a> and other resources, you must first obtain a reference to an instance of a <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html">MediaServer</a>.  This is done by the 'mrf.connect' method:
+    </p>
+    <pre>
+mrf.connect({
+  address: 10.1.0.100,  // IP address freeswitch event socket is listening on
+  port: 8021,           // freeswitch event socket listen port
+  secret: 'ClueCon',    // freeswitch authentication secret
+  listenPort: 8085      // leave at 8085; unless freeswitch dial plan is changed
+});</pre>
   
   </body>
 </html>
