@@ -23,13 +23,12 @@
     "drachtio": "git+ssh://git@github.com:davehorton/drachtio.git",
     "drachtio-srf": "git+ssh://git@github.com:davehorton/drachtio-srf.git",
     "lodash": "^3.10.1",
-    "modesl": "^1.1.5",
+    "modesl": "git+ssh://git@github.com:davehorton/node-esl.git",
     "node-noop": "0.0.1",
     "node-uuid": "^1.4.3",
     "only": "0.0.2"
   },
   "devDependencies": {
-    "async": "~0.9.0",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-nodeunit": "*",

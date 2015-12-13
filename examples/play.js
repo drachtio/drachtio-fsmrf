@@ -56,5 +56,5 @@ mrf.connect({
   listenPort: 8085
 }, function(ms) {
   console.log('successfully connected to media server: ') ;
-  ms.once('ready', start.bind(null, ms) ) ;
+  start(ms) ;
 }) ;
