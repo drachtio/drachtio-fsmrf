@@ -44,6 +44,7 @@ var assert = require('assert') ;
 var only = require('only') ;
 var noop = require('node-noop').noop;
 var _ = require('lodash') ;
+var async = require('async') ;
 var debug = require('debug')('drachtio-fsmrf') ;
 
 var State = {
@@ -117,6 +118,9 @@ function Conference( endpoint, name, opts, cb ) {
    * @type {Number}
    */
   this.maxMembers = -1 ;
+
+  // used to track play commands in progress
+  this._playCommands = {} ;
  
   this._endpoint.conn.subscribe('all') ;
  
@@ -270,21 +274,48 @@ Conference.prototype.stopRecording = function( file, cb ) {
 /**
  * play an audio file into the conference
  * @param  {string|Array}   file file (or array of files) to play 
- * @param  {Conference~mediaOperationsCallback} [cb] - callback invoked when media operations completes
+ * @param  {Conference~playOperationCallback} [cb] - callback invoked when the files have completed playing
  */
 Conference.prototype.play = function( file, cb ) {
-  assert.ok( 'string' === typeof file, 'file param is required and must be a string') ;
+  assert.ok( 'string' === typeof file || _.isArray( file ), 'file param is required and must be a string or array') ;
 
-  cb = cb || noop ;
+  var self = this ;
+  var files = typeof file === 'string' ? [file] : file ;
 
-  this._endpoint.api('conference', this.name + ' play ' + file, function(evt) {
-    var result = {
-      playbackSeconds: evt.getHeader('variable_playback_seconds'),
-      playbackMilliseconds: evt.getHeader('variable_playback_ms'),
-    } ;
-    cb(result) ;
+  // each call to conference play queues the file up; i.e. the callback returns immediately upon successful queueing, 
+  // not when the file has finished playing
+  async.eachSeries( files, function( f, callback ) {
+    self._endpoint.api('conference', self.name + ' play ' + f, function() {
+      callback(null) ;
+    }) ;
+  }, function(){
+    debug('files have been queued for playback into conference %s: ', self.name, files) ;
+    if( cb ) {
+      var firstFile = files[0] ;
+      var obj = {
+        remainingFiles: files.slice(1),
+        seconds: 0,
+        milliseconds: 0,
+        done: cb        
+      } ;
+      self._playCommands[firstFile] = self._playCommands[firstFile] || [] ;
+      self._playCommands[firstFile].push( obj ) ;
+    }
   }) ;
 };
+/**
+ * This callback is invoked when a playback to conference command completes with a play done event of the final file.
+ * @callback Conference~playOperationCallback
+ * @param {Error} err  error returned, if any
+ * @param {Conference~playbackResults} [results] - results describing the duration of media played
+ */
+/**
+ * This object describes the results of a playback into conference operation
+ * @typedef {Object} Conference~playbackResults
+ * @property {number} seconds - total seconds of media played
+ * @property {number} milliseconds - total milliseconds of media played
+ * @property {number} samples - total number of samples played
+ */
 
 //conference event handlers
 Conference.prototype.onAddMember = function( evt ) {
@@ -325,10 +356,10 @@ Conference.prototype.onDelMember = function(evt) {
     debug('member with member-id %s left, size is now: %d, remaining participants: ', memberId, size, this.participants) ;
 } ;
 Conference.prototype.onStartTalking = function(evt) {
-  debug('member started talking: ', evt) ;
+  debug('member started talking: ', evt.getHeader('Member-ID')) ;
 } ;
 Conference.prototype.onStopTalking = function(evt) {
-  debug('member stopped talking: ', evt) ;
+  debug('member stopped talking: ', evt.getHeader('Member-ID')) ;
 } ;
 Conference.prototype.onMuteDetect = function(evt) {
   debug('a muted member is talking: ', evt) ;
@@ -346,13 +377,54 @@ Conference.prototype.onDtmfMember = function(evt) {
   debug('a member has entered DTMF: ', evt) ;
 } ;
 Conference.prototype.onPlayFile = function(evt) {
-  debug('conference-level play has started: ', evt) ;
+  var confName = evt.getHeader('Conference-Name') ;
+  var file = evt.getHeader('File') ;
+  debug('conference-level play has started: %s: %s' , confName, file);
 } ;
 Conference.prototype.onPlayFileMember = function(evt) {
   debug('member-level play has completed: ', evt) ;
 } ;
-Conference.prototype.onPlayFileDone = function(/* evt */) {
-  debug('conference-level play has completed: ' /*, evt*/) ;
+Conference.prototype.onPlayFileDone = function(evt) {
+  var confName = evt.getHeader('Conference-Name') ;
+  var file = evt.getHeader('File') ;
+  var seconds = parseInt( evt.getHeader('seconds')) ;
+  var milliseconds = parseInt( evt.getHeader('milliseconds')) ;
+  var samples = parseInt( evt.getHeader('samples')) ;
+
+  debug('conference-level play has completed: %s: %s seconds: %d, milliseconds: %d, samples: %d',
+    confName, file, seconds, milliseconds, samples);
+
+  // check if the caller registered a callback for this play done
+  var el = this._playCommands[file] ;
+  if( !!el ) {
+    assert( _.isArray(el), 'Conference#onPlayFileDone: this._playCommands must be an array') ;
+    var obj = el[0] ;   
+    obj.seconds += seconds ;
+    obj.milliseconds += milliseconds ;
+    obj.samples += samples ;
+
+    if( 0 === obj.remainingFiles.length ) {
+
+      // done playing all files in this request
+      obj.done( null, {
+        seconds: obj.seconds,
+        milliseconds: obj.milliseconds,
+        samples: obj.samples
+      }) ;
+    } 
+    else {
+      var firstFile = obj.remainingFiles[0] ;
+      obj.remainingFiles = obj.remainingFiles.slice(1) ;
+      this._playCommands[firstFile] = this._playCommands[firstFile] || [] ;
+      this._playCommands[firstFile].push( obj ) ;
+    }
+
+    this._playCommands[file] = this._playCommands[file].slice(1) ;
+    if( 0 === this._playCommands[file].length ) {
+      //done with all queued requests for this file
+      delete this._playCommands[file] ;
+    }
+  }
 } ;
 Conference.prototype.onLock = function(evt) {
   debug('conference has been locked: ', evt) ;
@@ -406,7 +478,7 @@ Conference.prototype.toString = function() {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Dec 13 2015 15:30:22 GMT-0500 (EST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Dec 30 2015 22:09:53 GMT-0500 (EST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
