@@ -20,10 +20,10 @@
     "async": "^1.4.2",
     "debug": "^2.2.0",
     "delegates": "^0.1.0",
-    "drachtio": "git+ssh://git@github.com:davehorton/drachtio.git",
-    "drachtio-srf": "git+ssh://git@github.com:davehorton/drachtio-srf.git",
+    "drachtio": "davehorton/drachtio.git#0.3.4",
+    "drachtio-srf": "davehorton/drachtio-srf.git#0.99.8",
     "lodash": "^3.10.1",
-    "modesl": "git+ssh://git@github.com:davehorton/node-esl.git",
+    "modesl": "davehorton/node-esl.git",
     "node-noop": "0.0.1",
     "node-uuid": "^1.4.3",
     "only": "0.0.2"
