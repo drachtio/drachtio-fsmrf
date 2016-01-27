@@ -1,6 +1,6 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "0.99.8",
+  "version": "0.99.9",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
@@ -20,8 +20,8 @@
     "async": "^1.4.2",
     "debug": "^2.2.0",
     "delegates": "^0.1.0",
-    "drachtio": "^davehorton/drachtio.git#0.3.5",
-    "drachtio-srf": "^davehorton/drachtio-srf.git#0.99.9",
+    "drachtio": "davehorton/drachtio.git#0.3.6",
+    "drachtio-srf": "davehorton/drachtio-srf.git#0.99.10",
     "lodash": "^3.10.1",
     "modesl": "davehorton/node-esl.git",
     "node-noop": "0.0.1",
