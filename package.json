@@ -24,6 +24,7 @@
     "drachtio-srf": "davehorton/drachtio-srf.git#0.99.13",
     "lodash": "^3.10.1",
     "modesl": "davehorton/node-esl.git",
+    "moment": "^2.13.0",
     "node-noop": "0.0.1",
     "node-uuid": "^1.4.3",
     "only": "0.0.2"
