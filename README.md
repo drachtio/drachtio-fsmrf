@@ -22,7 +22,7 @@ srf.invite( function(req, res) {
   
   // connect caller to an endpoint on the media server
   ms.connectCaller(req, res, function(err, ep, dialog) {
-    if( err ) thrown err ;
+    if( err ) throw err ;
 
     // set up dialog handlers
     dialog.on('destroy', onCallerHangup.bind(dialog, ep)) ;
