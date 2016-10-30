@@ -48,14 +48,16 @@ app.connect(dConfig)
 }) ;
 
 var ms ;
-mrf.connect(mConfig, function(mediaserver) {
-  ms = mediaserver ;
-  console.log('successfully connected to media server') ;
-})
-.on('error', function(err){
-  console.error('Error connecting to media server: ', err.message ) ;
-  usage() ;
-}) ;  
+mrf.connect(mConfig, 
+  function(mediaserver) {
+    ms = mediaserver ;
+    console.log('successfully connected to media server') ;
+  }, 
+  function(err) {
+    console.error('Error connecting to media server: ', err.message ) ;
+    usage() ;
+  }
+) ;  
 
 srf.invite( function( req, res) {
 

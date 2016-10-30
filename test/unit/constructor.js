@@ -29,16 +29,15 @@ describe('MRF', function(){
     badConnect.should.throw() ;
   }) ;
 
-  it('should emit an error if connection fails', function(done){
+  it('should call error callback if connection fails', function(done){
     var mrf = new Mrf(app) ;
     mrf.connect({
       address: '127.0.0.1',
       port: 8333
     }, function() {
       done('unexpected result - should not have connected!!') ;
-    }) ;
-    mrf.on('error', function(err) {
-      done() ;
+    }, function(err) {
+      done() ;      
     }) ;
   }) ;
 
@@ -55,8 +54,7 @@ describe('MRF', function(){
       ms.on('error', function(err){
         done(err) ;
       }) ;
-    }) ;
-    mrf.on('error', function(err) {
+    }, function(err) {
       done(err) ;
     }) ;
   }) ;
