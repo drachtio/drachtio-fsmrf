@@ -26,8 +26,8 @@
     "modesl": "davehorton/node-esl.git",
     "moment": "^2.13.0",
     "node-noop": "0.0.1",
-    "node-uuid": "^1.4.3",
-    "only": "0.0.2"
+    "only": "0.0.2",
+    "uuid": "^3.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
