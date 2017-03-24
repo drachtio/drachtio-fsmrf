@@ -40,6 +40,12 @@ describe('MRF', function(){
       done() ;      
     }) ;
   }) ;
+  it('should use connection parameters in constructor', function(done){
+    var mrf = new Mrf({
+      host: 'localhost'
+    }) ;
+    done() ;      
+  }) ;
 
   it('should connect successfully to freeswitch', function(done){
     var mrf = new Mrf(app) ;
