@@ -1,6 +1,6 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "0.102.4",
+  "version": "0.102.5",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
@@ -31,10 +31,10 @@
   },
   "devDependencies": {
     "grunt": "~0.4.2",
-    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-jshint": "~1.1.0",
     "grunt-contrib-nodeunit": "*",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-jsdoc": "^1.0.0",
+    "grunt-jsdoc": "^2.1.0",
     "grunt-github-pages": "0.0.4",
     "jsdoc": ">=3.3.0-*",
     "minami": "^1.1.1",
