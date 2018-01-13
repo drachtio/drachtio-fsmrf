@@ -1,0 +1,45 @@
+version: '2.1'
+
+networks:
+  drachtio-fsmrf:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+services:
+  drachtio-uac:
+    image: drachtio/drachtio-server:latest
+    command: drachtio --contact "sip:*;transport=udp" --loglevel debug
+    ports:
+      - "9060:9022/tcp"
+    networks:
+      drachtio-fsmrf:
+        ipv4_address: 172.28.0.10
+
+  freeswitch-uac:
+    image: drachtio/drachtio-freeswitch-mrf:latest
+    command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
+    ports:
+      - "9070:8021/tcp"
+    networks:
+      drachtio-fsmrf:
+        ipv4_address: 172.28.0.11
+
+  drachtio-sut:
+    image: drachtio/drachtio-server:latest
+    command: drachtio --contact "sip:*;transport=udp" --loglevel debug
+    ports:
+      - "9061:9022/tcp"
+    networks:
+      drachtio-fsmrf:
+        ipv4_address: 172.28.0.21
+
+  freeswitch-sut:
+    image: drachtio/drachtio-freeswitch-mrf:latest
+    command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
+    ports:
+      - "9071:8021/tcp"
+    networks:
+      drachtio-fsmrf:
+        ipv4_address: 172.28.0.22

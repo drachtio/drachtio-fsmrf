@@ -1,14 +1,20 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "0.102.8",
+  "version": "1.1.0",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
-    "test": "make"
+    "start": "node app.js",
+    "jslint": "eslint lib index.js",
+    "test": "NODE_ENV=test node test/ | ./node_modules/.bin/tap-spec",
+    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/ --report html"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davehorton/drachtio-fsmrf.git"
+  },
+  "engines": {
+    "node": ">= 6.9.3"
   },
   "author": "",
   "license": "MIT",
@@ -20,26 +26,31 @@
     "async": "^1.4.2",
     "debug": "^2.2.0",
     "delegates": "^0.1.0",
-    "drachtio": "^1.0.9",
-    "drachtio-srf": "^3.0.4",
+    "drachtio-srf": "^4.2.3",
     "lodash": "^3.10.1",
+    "minimist": "^1.2.0",
     "modesl": "davehorton/node-esl.git",
     "moment": "^2.13.0",
-    "node-noop": "0.0.1",
     "only": "0.0.2",
     "uuid": "^3.0.0"
   },
   "devDependencies": {
+    "blue-tape": "^1.0.0",
+    "clear-require": "^2.0.0",
+    "config": "^1.28.1",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~1.1.0",
     "grunt-contrib-nodeunit": "*",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-jsdoc": "^2.1.0",
     "grunt-github-pages": "0.0.4",
+    "grunt-jsdoc": "^2.1.0",
+    "istanbul": "^0.4.5",
     "jsdoc": ">=3.3.0-*",
     "minami": "^1.1.1",
-    "minimist": "^1.1.0",
-    "mocha": "~2.1.0",
-    "should": "~2.1.1"
+    "minimist": "^1.2.0",
+    "tap": "^10.7.0",
+    "tap-dot": "^1.0.5",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.7.0"
   }
 }
