@@ -211,7 +211,7 @@ class Endpoint extends Emitter {
    * retrieve channel variables for the endpoint
    * @param  {boolean} [includeMedia] if true, retrieve rtp counters (e.g. variable_rtp_audio_in_raw_bytes, etc)
    * @param  {Endpoint~getChannelVariablesCallback} [callback]  callback function invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   getChannelVariables(includeMedia, callback) {
@@ -264,7 +264,7 @@ class Endpoint extends Emitter {
    * play an audio file on the endpoint
    * @param  {string|Array}   file file (or array of files) to play
    * @param  {Endpoint~playOperationCallback} [cb]   callback function invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   play(file, callback) {
@@ -323,7 +323,7 @@ class Endpoint extends Emitter {
    * play an audio file and collect digits
    * @param  {Endpoint~playCollectOptions}   opts - playcollect options
    * @param  {Endpoint~playCollectOperationCallback} [callback] - callback function invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   playCollect(opts, callback) {
@@ -381,7 +381,7 @@ class Endpoint extends Emitter {
    * @param  {string}   text phrase to speak
    * @param  {Endpoint~sayOptions}   opts - say command options
    * @param  {Endpoint~playOperationCallback} [callback] - callback function invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
 
@@ -468,7 +468,7 @@ class Endpoint extends Emitter {
    * @param  {Endpoint~confJoinOptions}  [opts] - options governing the connection
    * between the endpoint and the conference
    * @param  {Endpoint~confJoinCallback} [callback]  - callback invoked when join operation is completed
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   join(conf, opts, callback) {
@@ -533,7 +533,7 @@ class Endpoint extends Emitter {
    * bridge two endpoints together
    * @param  {Endpoint | string}   other    - an Endpoint or uuid of a channel to bridge with
    * @param  {Endpoint~operationCallback} [callback] - callback invoked when bridge operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   bridge(other, callback) {
@@ -570,7 +570,7 @@ class Endpoint extends Emitter {
   /**
    * Park an endpoint that is currently bridged with another endpoint
    * @param  {Endpoint~operationCallback} [callback] - callback invoked when bridge operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   unbridge(callback) {
@@ -635,8 +635,8 @@ class Endpoint extends Emitter {
 
   /**
    * execute a freeswitch application
-   * @param  {String}     app        application name
-   * @param  {[String]}   [arg]      application arguments, if any
+   * @param  {string}     app        application name
+   * @param  {string}   [arg]      application arguments, if any
    * @param  {Endpoint~mediaOperationsCallback} [callback] callback function
    * @return {Promise|Endpoint}    if no callback specified, a Promise that resolves with the response is returned
    * otherwise a reference to the endpoint object
@@ -675,7 +675,7 @@ class Endpoint extends Emitter {
   /**
    * Releases an Endpoint and associated resources
    * @param  {Endpoint~operationsCallback} [callback] callback function invoked after endpoint has been released
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   destroy(callback) {
@@ -716,7 +716,7 @@ class Endpoint extends Emitter {
    * record the full call
    * @file  {string} file - file to record to
    * @param  {endpointOperationCallback} [callback] - callback invoked with response to record command
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   recordSession(...args) { return endpointApps.recordSession(this, ...args); }
@@ -726,7 +726,7 @@ class Endpoint extends Emitter {
    * @param  {string}   file     file to record to
    * @param  {Endpoint~recordOptions}   opts - record command options
    * @param  {endpointRecordCallback} [callback] - callback invoked with response to record command
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   record(file, opts, callback) {
@@ -778,7 +778,7 @@ class Endpoint extends Emitter {
   /**
    * mute the member
    * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   confMute(...args) { return confOperations.mute(this, ...args); }
@@ -786,7 +786,7 @@ class Endpoint extends Emitter {
   /**
    * unmute the member
    * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   confUnmute(...args) { return confOperations.unmute(this, ...args); }
@@ -794,7 +794,7 @@ class Endpoint extends Emitter {
   /**
    * deaf the member
    * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
 
@@ -802,7 +802,7 @@ class Endpoint extends Emitter {
   /**
    * undeaf the member
    * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   confUndeaf(...args) { return confOperations.undeaf(this, ...args);  }
@@ -810,7 +810,7 @@ class Endpoint extends Emitter {
   /**
    * kick the member out of the conference
    * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   confKick(...args) { return confOperations.kick(this, ...args); }
@@ -818,7 +818,7 @@ class Endpoint extends Emitter {
   /**
    * kick the member out of the conference without exit sound
    * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|Endpoint]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the Endpoint object
    */
   confHup(...args) { return confOperations.hup(this, ...args); }
@@ -826,9 +826,9 @@ class Endpoint extends Emitter {
   /**
    * play a file to the member
    * @param string file - file to play
-   * @param {ConferenceConnection~playOptions} [opts] - play options
-   * @param  {ConferenceConnection~mediaOperationCallback} [callback] - callback invoked when operation completes
-   * @return {[Promise|ConferenceConnection]} returns a Promise if no callback supplied; otherwise
+   * @param {Endpoint~playOptions} [opts] - play options
+   * @param  {Endpoint~mediaOperationCallback} [callback] - callback invoked when operation completes
+   * @return {Promise|Endpoint} returns a Promise if no callback supplied; otherwise
    * a reference to the ConferenceConnection object
    */
   confPlay(...args) { return confOperations.play(this, ...args); }
@@ -1349,7 +1349,7 @@ _.each({
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 13 2018 16:47:19 GMT-0500 (EST) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 13 2018 17:07:03 GMT-0500 (EST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

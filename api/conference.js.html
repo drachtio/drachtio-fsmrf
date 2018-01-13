@@ -152,7 +152,7 @@ class Conference extends Emitter {
   /**
    * destroy the conference, releasing all legs
    * @param  {Conference~operationCallback} callback - callback invoked when conference has been destroyed
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   destroy(callback) {
@@ -193,7 +193,7 @@ class Conference extends Emitter {
  * get a conference parameter value
  * @param  {String}   param - parameter to retrieve
  * @param  {Conference~mediaOperationCallback} [callback] - callback invoked when operation completes
- * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+ * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
  * a reference to the Conference object
    */
   get(...args) { return confOperations.get(this, ...args); }
@@ -202,7 +202,7 @@ class Conference extends Emitter {
  * @param  {String}   param - parameter to set
  * @param  {String}   value - value
  * @param  {Conference~mediaOperationCallback} [callback] - callback invoked when operation completes
- * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+ * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
  * a reference to the Conference object
    */
   set(...args) { return confOperations.set(this, ...args); }
@@ -211,7 +211,7 @@ class Conference extends Emitter {
  * adjust the automatic gain control for the conference
  * @param  {Number|String}   level - 'on', 'off', or a numeric level
  * @param  {Conference~mediaOperationCallback} [callback] - callback invoked when operation completes
- * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+ * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
  * a reference to the Conference object
    */
   agc(...args) { return confOperations.agc(this, ...args); }
@@ -219,7 +219,7 @@ class Conference extends Emitter {
   /**
    * check the status of the conference recording
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   chkRecord(...args) { return confOperations.chkRecord(this, ...args); }
@@ -227,7 +227,7 @@ class Conference extends Emitter {
   /**
    * deaf all the non-moderators in the conference
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   deaf(...args) { return confOperations.deaf(this, ...args); }
@@ -235,7 +235,7 @@ class Conference extends Emitter {
   /**
    * undeaf all the non-moderators in the conference
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   undeaf(...args) { return confOperations.undeaf(this, ...args); }
@@ -243,14 +243,14 @@ class Conference extends Emitter {
   /**
    * mute all the non-moderators in the conference
    * @param  {Conference~mediaOperationsCallback} [cb] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   mute(...args) { return confOperations.mute(this, ...args); }
   /**
    * unmute all the non-moderators in the conference
    * @param  {Conference~mediaOperationsCallback} [cb] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   unmute(...args) { return confOperations.unmute(this, ...args); }
@@ -258,7 +258,7 @@ class Conference extends Emitter {
   /**
    * lock the conference
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   lock(...args) { return confOperations.lock(this, ...args); }
@@ -266,7 +266,7 @@ class Conference extends Emitter {
   /**
    * unlock the conference
    * @param  {Conference~mediaOperationsCallback} [cb] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   unlock(...args) { return confOperations.unlock(this, ...args); }
@@ -274,7 +274,7 @@ class Conference extends Emitter {
   /**
    * list members
    * @param  {Conference~mediaOperationsCallback} [cb] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   list(...args) { return confOperations.list(this, ...args); }
@@ -283,7 +283,7 @@ class Conference extends Emitter {
    * start recording the conference
    * @param  {String}   file - filepath to record to
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   startRecording(file, callback) {
@@ -318,7 +318,7 @@ class Conference extends Emitter {
   /**
    * pause the recording
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   pauseRecording(file, callback) {
@@ -351,7 +351,7 @@ class Conference extends Emitter {
   /**
    * resume the recording
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   resumeRecording(file, callback) {
@@ -384,7 +384,7 @@ class Conference extends Emitter {
   /**
    * stop the conference recording
    * @param  {Conference~mediaOperationsCallback} [callback] - callback invoked when media operations completes
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   stopRecording(file, callback) {
@@ -418,7 +418,7 @@ class Conference extends Emitter {
    * play an audio file or files into the conference
    * @param  {string|Array}   file file (or array of files) to play
    * @param  {Conference~playOperationCallback} [callback] - callback invoked when the files have completed playing
-   * @return {[Promise|Conference]} returns a Promise if no callback supplied; otherwise
+   * @return {Promise|Conference} returns a Promise if no callback supplied; otherwise
    * a reference to the Conference object
    */
   play(file, callback) {
@@ -760,7 +760,7 @@ confOperations.get = (conference, param, value, callback) => {
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 13 2018 16:47:19 GMT-0500 (EST) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 13 2018 17:07:03 GMT-0500 (EST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

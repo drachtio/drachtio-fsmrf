@@ -597,7 +597,7 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
     
 
-    <h4 class="name" id="api"><span class="type-signature"></span>api<span class="signature">(command, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="api"><span class="type-signature"></span>api<span class="signature">(command, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise|Mediaserver}</span></h4>
 
     
 
@@ -774,6 +774,26 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
         
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise</code></span>
+|
+
+<span class="param-type"><code>Mediaserver</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>returns a Promise if no callback supplied; otherwise
+a reference to the mediaserver object</p>
+</div>
 
     
 </div>
@@ -787,7 +807,7 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
     
 
-    <h4 class="name" id="connectCaller"><span class="type-signature"></span>connectCaller<span class="signature">(req, res, opts<span class="signature-attributes">opt</span>, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="connectCaller"><span class="type-signature"></span>connectCaller<span class="signature">(req, res, opts<span class="signature-attributes">opt</span>, callback)</span><span class="type-signature"> &rarr; {Promise|Mediaserver}</span></h4>
 
     
 
@@ -1032,6 +1052,26 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
         
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise</code></span>
+|
+
+<span class="param-type"><code>Mediaserver</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>returns a Promise if no callback supplied; otherwise
+a reference to the mediaserver object</p>
+</div>
 
     
 </div>
@@ -1128,7 +1168,7 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
     
 
-    <h4 class="name" id="createConference"><span class="type-signature"></span>createConference<span class="signature">(name, opts<span class="signature-attributes">opt</span>, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="createConference"><span class="type-signature"></span>createConference<span class="signature">(name, opts<span class="signature-attributes">opt</span>, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise|Mediaserver}</span></h4>
 
     
 
@@ -1341,6 +1381,26 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
         
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise</code></span>
+|
+
+<span class="param-type"><code>Mediaserver</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>returns a Promise if no callback supplied; otherwise
+a reference to the mediaserver object</p>
+</div>
 
     
 </div>
@@ -1354,7 +1414,7 @@ note that different addresses may be used for ipv4, ipv6, dtls, or udp connectio
 
     
 
-    <h4 class="name" id="createEndpoint"><span class="type-signature"></span>createEndpoint<span class="signature">(opts<span class="signature-attributes">opt</span>, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="createEndpoint"><span class="type-signature"></span>createEndpoint<span class="signature">(opts<span class="signature-attributes">opt</span>, callback<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise|Mediaserver}</span></h4>
 
     
 
@@ -1535,6 +1595,26 @@ is initially created in the inactive state.</p>
 
         
 
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Promise</code></span>
+|
+
+<span class="param-type"><code>Mediaserver</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    <p>returns a Promise if no callback supplied; otherwise
+a reference to the mediaserver object</p>
+</div>
 
     
 </div>
@@ -1631,7 +1711,7 @@ is initially created in the inactive state.</p>
 
     
 
-    <h4 class="name" id="hasCapability"><span class="type-signature"></span>hasCapability<span class="signature">(capability)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="hasCapability"><span class="type-signature"></span>hasCapability<span class="signature">(a)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1718,10 +1798,15 @@ is initially created in the inactive state.</p>
 
         <tr>
             
-                <td class="name"><code>capability</code></td>
+                <td class="name"><code>a</code></td>
             
 
             <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
             
             </td>
 
@@ -1730,7 +1815,7 @@ is initially created in the inactive state.</p>
             
 
             <td class="description last">
-                
+                <p>named capability -  ipv6, ipv4, dtls, or udp</p>
                 
             </td>
         </tr>
@@ -3254,7 +3339,7 @@ it is properly configured and ready to accept calls.</p>
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 13 2018 16:47:19 GMT-0500 (EST) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 13 2018 17:07:03 GMT-0500 (EST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
