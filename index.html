@@ -22,131 +22,213 @@
       <div class="drachtio-img"><img src="http://davehorton.github.io/drachtio-fsmrf/img/definition-only-cropped.png">
       </div>
       <p>
-        Welcome to the drachtio media resource function, empowering nodejs/javascript developers to build rich media application on SIP / VoIP networks
+        Welcome to the Drachtio Media Resource framework, a partner module to <a href="http://davehorton.github.io/drachtio-srf">drachtio-srf</a> for building high-performance <a href="SIP">https://www.ietf.org/rfc/rfc3261.txt</a>.
       </p>
-      <p>drachtio is an open-source, nodejs-based ecosystem for creating any kind of VoIP server-based application: registrar, proxy, back-to-back user agent, and many others. Within the drachtio ecosystem, drachtio-fsmrf is a high-level media processing abstraction layer  that utilizes <a href="https://freeswitch.org/">freeswitch</a> as a media server, and partners with the <a href="http://davehorton.github.io/drachtio-srf/">drachtio signaling resource framework</a> to enable the creation of media-processing applications such as conferencing, IVR and others.
-      </p>
-
-      <p><strong>Note:</strong> API documentation for drachtio-fsmrf <a href="http://davehorton.github.io/drachtio-fsmrf/api/index.html">can be found here</a>.
-
-      <pre>
-var app = require('drachtio')() ;
-var Mrf = require('drachtio-fsmrf') ;
-var mrf = new Mrf(app) ;
-var Srf = require('drachtio-srf') ;
-var srf = new Srf(app) ;
-
-srf.connect({
-  host: '127.0.0.1',
-  port: 9022,
-  secret: 'cymru',
-}) 
-.on('connect', (err, hostport) => { console.log(`connected to drachtio listening on ${hostport}`) ;})
-.on('error', (err) => { console.error(`Error connecting to drachtio at ${err || err.message}`) ; }) ;
-
-mrf.connect( {
-  address: '127.0.0.1',
-  port: 8021,
-  secret: 'ClueCon'
-}, (ms) => {
-  console.log(`connected to media server `);
-  // save the media server object as in app locals so it can be retrieved from middleware
-  srf.locals.ms = ms ;
-}) ;
-
-srf.invite( (req, res) => {
-  
-  // connect caller to an endpoint on the media server
-  req.app.locals.ms.connectCaller(req, res, {
-    codecs: ['PCMU']
-  }, (err, ep, dialog) => {
-    if( err ) { throw err ; }
-
-    // set up dialog handlers
-    dialog.on('destroy', () => { ep.destroy() ; }) ;
-
-    // play some prompts
-    ep.play(['ivr/8000/ivr-please_reenter_your_pin.wav',
-      'ivr/8000/ivr-please_state_your_name_and_reason_for_calling.wav',
-      'ivr/8000/ivr-you_lose.wav'], function(err, results){
-        console.log(`results: ${JSON.stringify(results)}`) ;
-      }) ;
-  }) ; 
-}) ;
-}</pre>
-
-      <h3>Getting Started</h3>
-      <p><strong>Note:</strong> drachtio-fsmrf applications require a network connection to a <a href="https://github.com/davehorton/drachtio-server">drachtio server</a> process that sits in the VoIP network and handles the low-level SIP messaging.
-      </p>
-      <p><strong>Additionally</strong>, drachtio-fsmrf applications require a freeswitch media server, configured as defined in the <a href="https://github.com/davehorton/drachtio-fs-ansible">drachtio-fs-ansible</a>, which provides an ansible role that can be used build up a freeswitch media server for use with drachtio-fsrmf from a vanilla ubuntu install.
-      </p>
-      <h4>Install drachtio-fsmrf</h4>
       <p>
-        <pre>
-npm install drachtio-fsmrf --save</pre>
+        drachtio-fsmrf implements common media server functions on top of Freeswitch and enables rich media applications involving IVR, conferencing and other features to be built in pure javascript without requiring in-depth knowledge of freeswitch configuration.
       </p>
-      <h4>Create an instance of the media resource function</h4>
-        <p>First, create a drachtio "app".  This contains the middleware stack and core message routing functions needed for the core drachtio library that is central to all drachtio applications.  Next, create a new instance of the drachtio media resource function, passing the drachtio app that you just created.
-          <pre>
-var drachtio = require('drachtio') ;
-var app = drachtio();
-var Mrf = require('drachtio-fsmrf'); 
-var mrf = new Mrf(app) ;</pre>
-        </p>
-      <h4>Create an instance of the signaling resource framework</h4>
-        <p>In most cases, you will also want to create an instance of the <a href="http://davehorton.github.io/drachtio-srf/">drachtio signaling resource framework</a> as well, in order to handle the SIP signaling requirements of the application.
-          <pre>
-var Srf = require('drachtio-srf'); 
-var srf = new Srf(app) ;</pre>
-        </p>
-    <h4>Connect to one or more freeswitch media servers</h4>
-    <p>In order to create and manipulate <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">endpoints</a>, <a href="http://davehorton.github.io/drachtio-fsmrf/api/Conference.html">conferences</a> and other resources, you must first obtain a reference to an instance of a <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html">MediaServer</a>.  This is done by the 'mrf.connect' method:
-    </p>
-    <pre>
-mrf.connect({
-  address: '10.1.0.100',  // IP address freeswitch event socket is listening on
-  port: 8021,           // freeswitch event socket listen port
-  secret: 'ClueCon',    // freeswitch authentication secret
-  listenPort: 8085      // leave at 8085; unless freeswitch dial plan is changed
-}, function(ms) {
-  console.log('connected to mediaserver: ', JSON.stringify(ms)) ;
-});</pre>
-  <h4>Allocate and manipulate resources on a media server</h4>
-  <p>Once you have obtained a reference to a media server, you can obtain access to resources on the media server via any of the following methods:
-    <ul>
-      <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createConference">MediaServer#createConference</a></li>
-      <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createEndpoint">MediaServer#createEndpoint</a></li>
-      <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#connectCaller">MediaServer#connectCaller</a></li>
-    </ul>
-    You can also send freeswitch api commands directly to the media server by invoking the <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#api">MediaServer#api</a> method.
-  </p>
-  <p>Once you are done working with an endpoint, you should call <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#destroy">Endpoint#destroy</a> to release it back to the media server.
-  </p>
+      <p>
+        <strong>Note:</strong>&nbsp;drachtio-fsmrf applications require a freeswitch media server, configured as per <a href="https://cloud.docker.com/swarm/drachtio/repository/docker/drachtio/drachtio-freeswitch-mrf/general">drachtio/drachtio-freeswitch-mrf</a>.  To build your own properly-configured Freeswitch to use with this module, either review that Dockerfile or have a look at <a href="https://github.com/davehorton/drachtio-mrf-ansible">drachtio-mrf-ansible</a>.
+      </p>
+      <p><a href="http://davehorton.github.io/drachtio-fsmrf/api/index.html">API documentation for drachtio-fsmrf can be found here</a></p>
+      <h2>Data Model</h2>
+      <p>This module exports a single class, <strong>Mrf</strong> (aka Media Resource Framework).</p>
+      <p>
+        Invoking the constructor creates an instance of the Mrf class that can then be used to connect to <strong>Mediaservers</strong>; once connected to a Mediaserver you can create and manipulate instances of <strong>Endpoints</strong> and <strong>Conferences</strong>.
+      </p>
+      <p>
+        That's it -- those are all the classes you need to work with. You can connect calls to a Mediaserver, producing an Endpoint.  You can then perform operations like <i>play</i>, <i>say</i>, <i>bridge</i>, <i>park</i> etc on the Endpoint (which equates to a Freeswitch channel).  You can create Conferences, join Endpoints into Conferences, and perform operations on the Conference.  And you can call any of the myriad freeswitch applications or api methods via the Endpoint and Conference classes.        
+      </p>
+      <p>
+        Let's dive in.
+      </p>
+      
+      <h2>Getting Started</h2>
+      <p>
+        First, create an instance of both the drachtio signaling resource framework and the media resource framework, as per below.
+      </p>
+      <pre>
+const Srf = require('drachtio-srf');
+const Mrf = require('drachtio-fsmrf');
 
-  <h3>IVR Features</h3>
-  <p>
-  Once you have an <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html">endpoint</a>, and a connected SIP <a href="http://davehorton.github.io/drachtio-srf/api/Dialog.html">dialog</a>, you can create IVR interactions by calling methods on the endpoint:
-  <ul>
-    <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#play">Endpoint#play</a> - play one or more audio files</li>
-    <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#playCollect">Endpoint#playCollect</a> - play an audio file and collect DTMF input from the call</li>
-    <li><a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#say">Endpoint#say</a> - speak a phrase, using a defined grammar</li>
-  </ul>
-  </p>
+const srf = new Srf() ;
+srf.connect(host: '127.0.0.1');
 
-  <h3>Conferencing Features</h3>
-  <p>There are two ways to create a conference:
-    <ol>
-      <li>By calling <a href="http://davehorton.github.io/drachtio-fsmrf/api/MediaServer.html#createConference">MediaServer#createConference</a> which creates a named conference on the media server</li>
-      <li>By allocating an endpoint, and then calling <a href="http://davehorton.github.io/drachtio-fsmrf/api/Endpoint.html#joinConference">Endpoint#joinConference</a>, to which you can either pass a previously allocated conference object, or simply the name of a conference.  In the latter case, a conference is dynamically created on the media server.</li>
-    </ol>
-  </p>
+srf.on('connect', (err, hostport) => {
+  console.log(`successfully connected to drachtio listening on ${hostport}`);
+});
 
-    <h3>Sample applications</h3>
-    <p>Besides the example applications found in the <a href="">examples</a> folder, the following full-fledged sample applications are available:
-      <ul>
-        <li><a href="https://github.com/davehorton/drachtio-sample-twostage-dialing">Two-stage dialing application</a></li>
-      </ul>
-    </p>
+const mrf = new Mrf(srf) ;        
+      </pre>
+      <p>
+        At that point, the mrf instance can be used to connect to and produce instances of MediaServers
+      </p>
+      <pre>
+mrf.connect({address: '127.0.0.1', port: 8021, secret: 'ClueCon'})
+  .then((mediaserver) => {
+    console.log('successfully connected to mediaserver');
+  })
+  .catch ((err) => {
+    console.error(`error connecting to mediaserver: ${err}`);
+  });
+      </pre>
+      <p>
+        In the example above, we see the `mrf#connect` method returns a Promise that resolves with an instance of the media server.  As with all public methods, a callback variant is available as well:
+      </p>
+      <pre>
+// we're connecting to the Freeswitch event socket
+mrf.connect({address: '127.0.0.1', port: 8021, secret: 'ClueCon'}, (err, mediaserver) => {
+    if (err) {
+      return console.log(`error connecting to mediaserver: ${err}`);
+    }
+    console.log(`connected to mediaserver listening on ${JSON.stringify(ms.sip)}`);
+    /*
+      {
+        "ipv4": {
+          "udp": {
+            "address":"172.28.0.11:5060"
+          },
+          "dtls": {
+            "address":"172.28.0.11:5081"
+          }
+        },
+        "ipv6":{
+          "udp":{},
+          "dtls":{}
+        }
+      }
+    */
+  }
+});        
+      </pre>
+      <p>
+        Having a media server instance, we can now create instances of Endpoints and Conferences and invoke operations on those objects.
+      </p>
+      <h2>Performing Media Operations</h2>
+      <p>
+        We can create an Endpoint when we have an incoming call, by connecting it to a Mediaserver.
+      </p>
+      <pre>
+srf.invite((req, res) => {
+  mediaserver.connectCaller(req, res)
+    .then(({endpoint, dialog}) => {
+      console.log('successfully connected call to media server');
+    });
+      </pre>
+      <p>
+        In the example above, we use <code>MediaServer#connectCaller()</code> to connect a call to a Mediaserver, producing both an <strong>Endpoint</strong> (represening the channel on Freeswitch) and a <strong>Dialog</strong> (representing the UAS dialog).
+      </p>
+      <p>
+        Again, note that a callback version is also available:        
+      </p>
+      <pre>
+srf.invite((req, res) => {   
+  mediaserver.connectCaller(req, res, (err, {endpoint, dialog} => {
+    if (err) return console.log(`Error connecting ${err}`);
+    console.log('successfully connected call to media server');
+  });        
+      </pre>
+      <p>
+        We can also create an Endpoint outside of any inbound call by calling <code>MediaServer#createEndpoint()</code>.  This will give us an initially inactive Endpoint that we can later modify to stream to a remote destination:
+      </p>
+      <pre>
+mediaserver.createEndpoint()
+  .then((endpoint) => {
+
+    // some time later...
+    endpoint.modify(remoteSdp);
+
+  });        
+      </pre>
+      <p>
+        Once we have an Endpoint, we can do things like play a prompt and collect dtmf:
+      </p>
+      <pre>
+endpoint.playCollect({file: myFile, min: 1, max: 4})
+  .then((obj) => {
+    console.log(`collected digits: ${obj.digits}`);
+  });        
+      </pre>
+      <p>
+        Conferences work similarly - we create them and then can join Endpoints to them.
+      </p>
+      <pre>
+mediaserver.createConference('my_conf', {maxMembers: 50})
+  .then((conference) => {
+    return endpoint.join(conference)
+  })
+  .then(() => {
+    console.log('endpoint joined to conference')
+  });
+      </pre>
+      <p>
+        When an Endpoint is joined to a Conference, we have an additional set of operations we can invoke on the Endpoint -- things like mute/unmute, turn on or off automatic gain control, playing a file directly to the participant on that Endpoint, etc.  These actions are performed by methods that all begin with <i>conf</i>:
+      </p>
+      <pre>
+endpoint.join(conference, (err) => {
+  if (err) return console.log(`Error ${err}`);
+
+  endpoint.confMute();
+  endpoint.confPlay(myFile);
+}        
+      </pre>
+      <h2>Executing arbitrary Freeswitch applications and APIs</h2>
+      <p>
+        As shown above, some methods have been added to the <code>Endpoint</code> and <code>Conference</code> class to provide syntactic sugar over freeswitch aplications and apis.  However, any Freeswitch application or api can also be called directly.
+      </p>
+      <p>
+        <code>Endpoint#execute</code> executes a Freeswitch application and returns in either the callback or the Prompise the contents of the associated CHANNEL_EXECUTE_COMPLETE event that Freeswitch returns. The event structure <a href="https://github.com/englercj/node-esl/blob/master/lib/esl/Event.js">is defined here</a>.
+      </p>
+      <pre>
+// use freeswitch application to generate dtmf from an Endpoint
+endpoint.execute('send_dtmf', `${digits}@125`, (err, evt) => {
+  if (err) return console.error(err);
+
+  console.log(`last dtmf duration was ${evt.getHeader('variable_last_dtmf_duration')}`);
+})        
+      </pre>
+      <p>
+        <code>Endpoint#api</code> executes a Freeswitch api call and returns in either the callback or the Promise the response that Freeswitch returns to the command.  
+      </p>
+      <pre>
+// use freeswitch api to get all current channel variables
+endpoint.api('uuid_dump', endpoint.uuid)
+  .then((response) => {
+    console.log(`${JSON.stringify(response)}`);
+    //
+    //    {
+    //  "headers": [{
+    //    "name": "Content-Type",
+    //    "value": "api/response"
+    //  }, {
+    //    "name": "Content-Length",
+    //    "value": 8475
+    //  }],
+    //  "hPtr": null,
+    //  "body": "Event-Name: CHANNEL_DATA\n..
+
+  });        
+      </pre>
+      <p>
+        Note that body text of response is plain text separated by newlines, but this can be converted into a plain object with key-value properties by using `Mrf#utils#parseBodyText`, as per below:
+      </p>
+      <pre>
+// use parseBodyText to parse api headers into simple object properties
+endpoint.api('uuid_dump', endpoint.uuid)
+  .then((response) => {
+    const vars = Mrf.utils.parseBodyText(response.body);
+    console.log(`${JSON.stringify(vars)}`);
+    //   {
+    //    "Event-Name": "CHANNEL_DATA",
+    //    "Core-UUID": "de006bc8-f892-11e7-a989-3b397b4b8083",
+    //     ...
+    //   }
+  });        
+      </pre>
+
+
+
+
 
     <h3>License</h3>
       <a href="https://github.com/davehorton/drachtio-fsmrf/blob/master/LICENSE">MIT</a>
