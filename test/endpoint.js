@@ -355,9 +355,10 @@ test('record', (t) => {
         ep.play(['silence_stream://1000', 'voicemail/8000/vm-record_message.wav']);
         promiseRecord = ep.record(EP_FILE2, {timeLimitSecs: 3});
         t.pass('started recording');
-        return uac.generateSilence(1200);
+        return uac.generateSilence(2000);
       })
       .then((evt) => {
+        t.pass('generating dtmf #');
         uac.generateDtmf('#');
         return promiseRecord;
       })

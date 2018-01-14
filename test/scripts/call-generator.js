@@ -48,7 +48,7 @@ module.exports = function(opts) {
         return;
       })
       .catch((err, res) => {
-        console.log(`error: ${JSON.stringify(err)}`);
+        console.log(`error generating dtmf: ${JSON.stringify(err)}`);
       });
   };
 
