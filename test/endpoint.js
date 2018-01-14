@@ -5,8 +5,8 @@ const config = require('config') ;
 const clearRequire = require('clear-require');
 const async = require('async');
 const Endpoint = require('../lib/endpoint');
-const EP_FILE = '$${base_dir}/recordings/endpoint_record.wav';
-const EP_FILE2 = '$${base_dir}/recordings/endpoint_record2.wav';
+const EP_FILE = '/tmp/endpoint_record.wav';
+const EP_FILE2 = '/tmp/endpoint_record2.wav';
 
 // connect the 2 apps to their drachtio servers
 function connect(agents) {
