@@ -32,7 +32,7 @@ function disconnect(agents) {
 }
 
 test('MediaServer#createConference using Promises', (t) => {
-  t.timeoutAfter(3000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -64,7 +64,7 @@ test('MediaServer#createConference using Promises', (t) => {
 }) ;
 
 test('MediaServer#createConference using Callback', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -96,7 +96,7 @@ test('MediaServer#createConference using Callback', (t) => {
 }) ;
 
 test('Connect incoming call into a conference', (t) => {
-  t.timeoutAfter(15000);
+  t.timeoutAfter(25000);
 
   const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
   const srf = new Srf();

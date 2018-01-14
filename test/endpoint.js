@@ -30,7 +30,7 @@ function disconnect(agents) {
 
 
 test('MediaServer#createEndpoint create idle endpoint using callback', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(3000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -53,7 +53,7 @@ test('MediaServer#createEndpoint create idle endpoint using callback', (t) => {
 }) ;
 
 test('MediaServer#createEndpoint create idle endpoint using Promise', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(3000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -83,7 +83,7 @@ test('MediaServer#createEndpoint create idle endpoint using Promise', (t) => {
 
 
 test('MediaServer#connectCaller create active endpoint using Promise', (t) => {
-  t.timeoutAfter(3000);
+  t.timeoutAfter(6000);
 
   const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
   const srf = new Srf();
@@ -158,7 +158,7 @@ test('MediaServer#connectCaller create active endpoint using Promise', (t) => {
 });
 
 test('MediaServer#connectCaller create active endpoint using Callback', (t) => {
-  t.timeoutAfter(3000);
+  t.timeoutAfter(5000);
 
   const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
   const srf = new Srf();
@@ -214,7 +214,7 @@ test('MediaServer#connectCaller create active endpoint using Callback', (t) => {
 });
 
 test('play and collect dtmf', (t) => {
-  t.timeoutAfter(5000);
+  t.timeoutAfter(10000);
 
   const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
   const srf = new Srf();
@@ -314,7 +314,7 @@ test('play and collect dtmf', (t) => {
 });
 
 test('record', (t) => {
-  t.timeoutAfter(5000);
+  t.timeoutAfter(10000);
 
   const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
   const srf = new Srf();
