@@ -8,7 +8,7 @@ drachtio-fsmrf implements common media server functions on top of Freeswitch and
 
 [API documentation for drachtio-fsmrf can be found here](http://davehorton.github.io/drachtio-fsmrf/api/index.html).
 
-## Data Model
+# Data Model
 This module exports a single class, **Mrf** (aka Media Resource Framework).  
 
 Invoking the constructor creates an instance of the Mrf class that can then be used to connect to **Mediaservers**; once connected to a Mediaserver you can create and manipulate instances of **Endpoints** and **Conferences**.
@@ -17,7 +17,7 @@ That's it -- those are all the classes you need to work with. You can connect ca
 
 Let's dive in.
 
-## Getting Started
+# Getting Started
 First, create an instance of both the drachtio signaling resource framework and the media resource framework, as per below.
 
 ```js
@@ -72,7 +72,7 @@ mrf.connect({address: '127.0.0.1', port: 8021, secret: 'ClueCon'}, (err, mediase
 ```
 Having a media server instance, we can now create instances of Endpoints and Conferences and invoke operations on those objects.
 
-## Performing Media Operations
+# Performing Media Operations
 
 We can create an Endpoint when we have an incoming call, by connecting it to a Mediaserver.
 ```js
@@ -131,7 +131,7 @@ endpoint.join(conference, (err) => {
 }
 ```
 
-## Executing arbitrary Freeswitch applications and APIs
+# Execute any Freeswitch application or api
 As shown above, some methods have been added to the `Endpoint` and `Conference` class to provide syntactic sugar over freeswitch aplications and apis.  However, any Freeswitch application or api can also be called directly.
 
 `Endpoint#execute` executes a Freeswitch application and returns in either the callback or the Prompise the contents of the associated CHANNEL_EXECUTE_COMPLETE event that Freeswitch returns. The event structure [is defined here](https://github.com/englercj/node-esl/blob/master/lib/esl/Event.js):
@@ -163,11 +163,11 @@ endpoint.api('uuid_dump', endpoint.uuid)
 
   });
 ```
-Note that body text of response is plain text separated by newlines, but this can be converted into a plain object with key-value properties by using `Mrf#utils#parseBodyText`, as per below:
+Note that Content-Type api/response returned by api requests return a body consisting of plain text separated by newlines. To parse this body into a plain javascript object with named properties, use the `Mrf#utils#parseBodyText` method, as per below:
 ```js
 endpoint.api('uuid_dump', endpoint.uuid)
-  .then((response) => {
-    const vars = Mrf.utils.parseBodyText(response.body);
+  .then((evt) => {
+    const vars = Mrf.utils.parseBodyText(evt.getBody());
     console.log(`${JSON.stringify(vars)}`);
     //   {
     //    "Event-Name": "CHANNEL_DATA",
@@ -176,6 +176,22 @@ endpoint.api('uuid_dump', endpoint.uuid)
     //   }
   });
 ```
+# Tests
+To run tests you will need Docker and docker-compose installed on your host, as the test suite runs in a docker network created by [docker-compose-testbed.yaml](test/docker-compose-testbed.yaml).  The first time you run the tests, it will take a while since docker images will be downloaded to your host.
+```js
+$ npm test
 
-### License
+  starting docker network..
+
+    docker network started, giving extra time for freeswitch to initialize...
+
+  Mrf#connect using Promise
+
+    ✔ mrf.localAddresses is an array
+    ✔ socket connected
+    ✔ mediaserver.srf is an Srf
+    
+    ...etc...
+```
+# License
 [MIT](https://github.com/davehorton/drachtio-fsmrf/blob/master/LICENSE)
