@@ -1,3 +1,5 @@
+# drachtio-fsmrf [![Build Status](https://secure.travis-ci.org/davehorton/drachtio-fsmrf.png)](http://travis-ci.org/davehorton/drachtio-fsmrf) [![NPM version](https://badge.fury.io/js/drachtio-fsmrf.svg)](http://badge.fury.io/js/drachtio-fsmrf)
+
 [![drachtio logo](http://davehorton.github.io/drachtio-srf/img/definition-only-cropped.png)](http://davehorton.github.io/drachtio-srf)
 
 Welcome to the Drachtio Media Resource framework, a partner module to [drachtio-srf](http://davehorton.github.io/drachtio-srf) for building high-performance [SIP](https://www.ietf.org/rfc/rfc3261.txt) server applications in pure javascript.
@@ -190,7 +192,7 @@ $ npm test
     ✔ mrf.localAddresses is an array
     ✔ socket connected
     ✔ mediaserver.srf is an Srf
-    
+
     ...etc...
 ```
 # License
