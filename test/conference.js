@@ -31,6 +31,38 @@ function disconnect(agents) {
   clearRequire('./../app');
 }
 
+test('MediaServer#createConference without specifying a name', (t) => {
+  t.timeoutAfter(5000);
+
+  const srf = new Srf();
+  srf.connect(config.get('drachtio-uac')) ;
+  const mrf = new Mrf(srf) ;
+
+  let mediaserver ;
+
+  connect([srf])
+    .then(() => {
+      return mrf.connect(config.get('freeswitch-uac'));
+    })
+    .then((ms) => {
+      mediaserver = ms ;
+      return mediaserver.createConference();
+    })
+    .then((conference) => {
+      t.ok(conference instanceof Conference, `successfully created conference '${conference.name}'`);
+      return conference.destroy() ;
+    })
+    .then(() => {
+      t.pass('conference destroyed');
+      mediaserver.disconnect() ;
+      disconnect([srf]);
+      return t.end() ;
+    })
+    .catch((err) => {
+      t.fail(err);
+    });
+}) ;
+
 test('MediaServer#createConference using Promises', (t) => {
   t.timeoutAfter(5000);
 
