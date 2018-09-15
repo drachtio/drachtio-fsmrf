@@ -5,7 +5,7 @@ const config = require('config') ;
 const clearRequire = require('clear-require');
 const async = require('async');
 const MediaServer = require('../lib/mediaserver');
-
+const debug = require('debug')('drachtio:fsmrf') ;
 
 // connect the 2 apps to their drachtio servers
 function connect(agents) {
@@ -70,7 +70,6 @@ test('Mrf#connect rejects Promise with error when attempting connection to non-l
 
   connect([srf])
     .then(() => {
-
       return mrf.connect(config.get('freeswitch-uac-fail'));
     })
     .then((mediaserver) => {
@@ -116,7 +115,7 @@ test('Mrf#connect using callback', (t) => {
       t.fail(err);
     });
 }) ;
-
+/*
 test('Mrf#connect callback returns error when attempting connection to non-listening port', (t) => {
   t.timeoutAfter(1000);
 
@@ -136,3 +135,4 @@ test('Mrf#connect callback returns error when attempting connection to non-liste
       t.fail(err);
     });
 }) ;
+*/
