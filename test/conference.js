@@ -45,6 +45,7 @@ test('MediaServer#createConference without specifying a name', (t) => {
       return mrf.connect(config.get('freeswitch-uac'));
     })
     .then((ms) => {
+      t.pass('connected to media server')
       mediaserver = ms ;
       return mediaserver.createConference();
     })
