@@ -1,4 +1,4 @@
-version: '2.1'
+version: '2'
 
 networks:
   drachtio-fsmrf:
@@ -11,6 +11,7 @@ services:
   drachtio-uac:
     image: drachtio/drachtio-server:latest
     command: drachtio --contact "sip:*;transport=udp" --loglevel debug
+    container_name: drachtio-uac
     ports:
       - "9060:9022/tcp"
     networks:
@@ -20,6 +21,7 @@ services:
   freeswitch-uac:
     image: drachtio/drachtio-freeswitch-mrf:latest
     command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
+    container_name: freeswitch-uac
     ports:
       - "9070:8021/tcp"
     networks:
@@ -29,6 +31,7 @@ services:
   drachtio-sut:
     image: drachtio/drachtio-server:latest
     command: drachtio --contact "sip:*;transport=udp" --loglevel debug
+    container_name: drachtio-sut
     ports:
       - "9061:9022/tcp"
     networks:
@@ -38,6 +41,7 @@ services:
   freeswitch-sut:
     image: drachtio/drachtio-freeswitch-mrf:latest
     command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
+    container_name: freeswitch-sut
     ports:
       - "9071:8021/tcp"
     networks:

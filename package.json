@@ -26,7 +26,7 @@
     "async": "^1.4.2",
     "debug": "^2.2.0",
     "delegates": "^0.1.0",
-    "drachtio-srf": "^4.3.5",
+    "drachtio-srf": "^4.4.0",
     "minimist": "^1.2.0",
     "modesl": "davehorton/node-esl.git",
     "moment": "^2.13.0",

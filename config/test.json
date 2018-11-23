@@ -28,7 +28,7 @@
     "secret": "ClueCon"
   },
   "call-generator": {
-    "uri": "sip:test_drachtio-sut_1",
+    "uri": "sip:drachtio-sut",
     "drachtio": {
       "host": "127.0.0.1",
       "port": 9060,
