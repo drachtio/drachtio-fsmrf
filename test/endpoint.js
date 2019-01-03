@@ -213,6 +213,66 @@ test('MediaServer#connectCaller create active endpoint using Callback', (t) => {
   }
 });
 
+test('MediaServer#connectCaller add custom event listeners', (t) => {
+  t.timeoutAfter(5000);
+
+  const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
+  const srf = new Srf();
+  const mrf = new Mrf(srf) ;
+  let ms, ep, dlg ;
+
+  srf.connect(config.get('drachtio-sut')) ;
+
+  connect([srf, uac])
+    .then(() => {
+      srf.invite(handler);
+      uac.startScenario() ;
+      return ;
+    })
+    .catch((err) => {
+      t.fail(err);
+    });
+
+  function handler(req, res) {
+
+    mrf.connect(config.get('freeswitch-sut'))
+      .then((mediaserver) => {
+        t.pass('connected to media server');
+        return ms = mediaserver ;
+      })
+      .then(() => {
+        return ms.connectCaller(req, res);
+      })
+      .then(({endpoint, dialog}) => {
+        ep = endpoint ;
+        dlg = dialog ;
+        return uac.streamTo(endpoint.local.sdp);
+      })
+      .then(() => {
+        t.pass('modified uac to stream to endpoint');
+        t.throws(ep.addCustomEventListener.bind(ep, 'example::event'), 'throws if handler is not present');
+        t.throws(ep.addCustomEventListener.bind(ep, 'example::event', 'foobar'), 'throws if handler is not a function');
+        t.throws(ep.addCustomEventListener.bind(ep, 'CUSTOM example::event'), 'throws if incorrect form of event name used');
+        ep.addCustomEventListener('example::event', (args) => {});
+        t.equals(ep._customEvents.length, 1, 'successfully adds custom event listener');
+        ep.removeCustomEventListener('example::event');
+        t.equals(ep._customEvents.length, 0, 'successfully removes custom event listener');        
+        return;
+      })
+      .then(() => {
+        ep.destroy() ;
+        dlg.destroy() ;
+        ms.disconnect() ;
+        disconnect([srf, uac]);
+        t.end() ;
+        return;
+      })
+      .catch((err) => {
+        t.fail(err);
+      });
+  }
+});
+
 test('play and collect dtmf', (t) => {
   t.timeoutAfter(10000);
 
