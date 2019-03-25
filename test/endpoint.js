@@ -457,7 +457,7 @@ test('record', (t) => {
 });
 
 test('fork audio', (t) => {
-  t.timeoutAfter(10000);
+  t.timeoutAfter(15000);
 /*
   if (process.env.CI === 'travis') {
     t.pass('stubbed out for travis');
