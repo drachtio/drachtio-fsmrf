@@ -458,14 +458,12 @@ test('record', (t) => {
 
 test('fork audio', (t) => {
   t.timeoutAfter(15000);
-/*
+
   if (process.env.CI === 'travis') {
     t.pass('stubbed out for travis');
     t.end();
     return;
   }
-*/
-
 
   const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
   const srf = new Srf();
