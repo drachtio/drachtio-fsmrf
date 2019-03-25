@@ -42,6 +42,11 @@ module.exports = function(opts) {
       });
   };
 
+  srf.playFile = function(file) {
+    return ep.play(file)
+      .catch((err) => console.log(`error: ${err}`));
+  };
+
   srf.generateDtmf = function(digits) {
     ep.execute('send_dtmf', `${digits}@125`)
       .then((res) => {

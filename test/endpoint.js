@@ -413,6 +413,9 @@ test('record', (t) => {
         t.ok(endpoint instanceof Endpoint, 'connected incoming call to endpoint');
         ep = endpoint ;
         dlg = dialog ;
+        ep.on('dtmf', (evt) => {
+          t.pass(`got dtmf: ${JSON.stringify(evt)}`);
+        });
         return uac.streamTo(ep.local.sdp);
       })
       .then(() => {
@@ -432,6 +435,110 @@ test('record', (t) => {
       .then((evt) => {
         t.ok(evt.terminatorUsed === '#', `record terminated by # key: ${JSON.stringify(evt)}`);
         return;
+      })
+      .then(() => {
+        ep.destroy() ;
+        dlg.destroy() ;
+        ms.disconnect() ;
+        disconnect([srf, uac]);
+        t.end() ;
+        return ;
+      })
+      .catch((err) => {
+        console.error(err);
+        t.fail(err);
+        ep.destroy() ;
+        dlg.destroy() ;
+        ms.disconnect() ;
+        disconnect([srf, uac]);
+        t.end() ;
+      });
+  }
+});
+
+test('fork audio', (t) => {
+  t.timeoutAfter(10000);
+
+  if (process.env.CI === 'travis') {
+    t.pass('stubbed out for travis');
+    t.end();
+    return;
+  }
+
+
+  const uac = require('./scripts/call-generator')(config.get('call-generator')) ;
+  const srf = new Srf();
+  const mrf = new Mrf(srf) ;
+  let ms, ep, dlg ;
+
+  srf.connect(config.get('drachtio-sut')) ;
+
+  connect([srf, uac])
+    .then(() => {
+      srf.invite(handler);
+      uac.startScenario() ;
+      return ;
+    })
+    .catch((err) => {
+      t.fail(err);
+    });
+
+  function handler(req, res) {
+
+    let promisePlayFile;
+    mrf.connect(config.get('freeswitch-sut'))
+      .then((mediaserver) => {
+        t.pass('connected to media server');
+        ms = mediaserver ;
+        return mediaserver.connectCaller(req, res);
+      })
+      .then(({endpoint, dialog}) => {
+        t.ok(endpoint instanceof Endpoint, 'connected incoming call to endpoint');
+        ep = endpoint ;
+        dlg = dialog ;
+        return uac.streamTo(ep.local.sdp);
+      })
+      .then(() => {
+        return ep.forkAudioStart({
+          wsUrl: 'ws://ws-server:3001',
+          mixType: 'stereo',
+          sampling: '16k',
+          metadata: {foo: 'bar'}
+        });
+      })
+      .then(() => {
+        t.pass('started forking audio with metadata');
+        return uac.playFile('voicemail/16000/vm-record_message.wav');
+      })
+      .then((evt) => {
+        return ep.forkAudioSendText('simple text');
+      })
+      .then(() => {
+        t.pass('sent text frame ');
+        return ep.forkAudioSendText({bar: 'baz'});
+      })
+      .then(() => {
+        t.pass('sent text frame (json) ');
+        return ep.forkAudioStop({foo: 'baz'});
+      })
+      .then(() => {
+        t.pass('stopped forking audio with metadata');
+        return ep.forkAudioStart({
+          wsUrl: 'ws://ws-server:3001',
+          mixType: 'stereo',
+          sampling: '16k'
+        });
+      })
+      .then(() => {
+        t.pass('started forking audio with no metadata');
+        return uac.playFile('voicemail/16000/vm-record_message.wav');
+      })
+      .then((evt) => {
+        return ep.forkAudioStop();
+      })
+      .then(() => {
+        t.pass('stopped forking audio with no metadata');
+        return ;
       })
       .then(() => {
         ep.destroy() ;

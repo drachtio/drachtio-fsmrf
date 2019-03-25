@@ -22,6 +22,8 @@ services:
     image: drachtio/drachtio-freeswitch-mrf:latest
     command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
     container_name: freeswitch-uac
+    volumes:
+      - ./sounds:/usr/local/freeswitch/sounds
     ports:
       - "9070:8021/tcp"
     networks:
@@ -42,8 +44,20 @@ services:
     image: drachtio/drachtio-freeswitch-mrf:latest
     command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
     container_name: freeswitch-sut
+    volumes:
+      - ./sounds:/usr/local/freeswitch/sounds
+      - ./recordings:/tmp
     ports:
       - "9071:8021/tcp"
     networks:
       drachtio-fsmrf:
         ipv4_address: 172.28.0.22
+
+  ws-server:
+    image: drachtio/sample-ws-audio-fork:latest
+    container_name: ws-server
+    volumes:
+      - ./recordings:/tmp
+    networks:
+      drachtio-fsmrf:
+        ipv4_address: 172.28.0.30
