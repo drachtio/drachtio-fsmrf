@@ -1,13 +1,13 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
     "start": "node app.js",
     "jslint": "eslint lib index.js",
     "test": "NODE_ENV=test node test/ | ./node_modules/.bin/tap-spec",
-    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/ --report html"
+    "coverage": "./node_modules/.bin/nyc --reporter html --report-dir ./coverage npm run test"
   },
   "repository": {
     "type": "git",
@@ -39,10 +39,9 @@
     "blue-tape": "^1.0.0",
     "clear-require": "^2.0.0",
     "config": "^1.28.1",
-    "istanbul": "^0.4.5",
-    "tap": "^12.0.1",
-    "tap-dot": "^1.0.5",
-    "tap-spec": "^5.0.0",
-    "tape": "^4.7.0"
+    "nyc": "^14.1.0",
+    "tap": "^14.2.0",
+    "tap-dot": "^2.0.0",
+    "tap-spec": "^5.0.0"
   }
 }
