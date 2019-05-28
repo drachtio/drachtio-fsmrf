@@ -7,6 +7,12 @@ test('starting docker network..', (t) => {
     if (-1 != stderr.indexOf('is up-to-date')) return t.end() ;
     console.log('docker network started, giving extra time for freeswitch to initialize...');
     testFreeswitches(['freeswitch-sut', 'freeswitch-uac'], 35000, (err) => {
+      if (err) {
+        exec(`docker logs freeswitch-sut`, (err, stdout, stderr) => {
+          console.log(stdout);
+          console.log(stderr);
+        })
+      }
       t.end(err);
     });
   });
