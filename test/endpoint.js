@@ -280,7 +280,7 @@ test('play and collect dtmf', (t) => {
   const srf = new Srf();
   const mrf = new Mrf(srf) ;
   let ms, ep, ep2, dlg ;
-  const digits = '1234';
+  const digits = '1';
 
   srf.connect(config.get('drachtio-sut')) ;
 
@@ -322,7 +322,7 @@ test('play and collect dtmf', (t) => {
         return ep.playCollect({file: 'silence_stream://200', min: 1, max: 4});
       })
       .then((response) => {
-        t.ok(response.digits === '1234', `detected digits: \'${response.digits}\'`);
+        t.ok(response.digits === '1', `detected digits: \'${response.digits}\'`);
         return ;
       })
       .then(() => {
