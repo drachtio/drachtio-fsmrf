@@ -136,3 +136,73 @@ test('Mrf#connect callback returns error when attempting connection to non-liste
     });
 }) ;
 */
+
+/* Sending custom-profile Mrf setup */
+
+test('Mrf# - custom-profile - connect using Promise', (t) => {
+  t.timeoutAfter(1000);
+
+  const srf = new Srf();
+  srf.connect(config.get('drachtio-uac')) ;
+  const mrf = new Mrf(srf) ;
+
+  connect([srf])
+    .then(() => {
+      t.ok(mrf.localAddresses.constructor.name === 'Array', 'mrf.localAddresses is an array');
+
+      return mrf.connect(config.get('freeswitch-custom-profile-uac'));
+    })
+    .then((mediaserver) => {
+      t.ok(mediaserver.conn.socket.constructor.name === 'Socket', 'socket connected');
+      t.ok(mediaserver.srf instanceof Srf, 'mediaserver.srf is an Srf');
+      t.ok(mrf.mediaservers.length === 1, 'mrf.mediaservers is populated');
+      t.ok(mediaserver instanceof MediaServer,
+        `successfully connected to mediaserver at ${mediaserver.sip.ipv4.udp.address}`);
+      t.ok(mediaserver.hasCapability(['ipv4', 'udp']), 'mediaserver has ipv4 udp');
+      t.ok(mediaserver.hasCapability(['ipv4', 'dtls']), 'mediaserver has ipv4 dtls');
+      t.ok(!mediaserver.hasCapability(['ipv6', 'udp']), 'mediaserver does not have ipv6 udp');
+      t.ok(!mediaserver.hasCapability(['ipv6', 'dtls']), 'mediaserver does not have ipv6 dtls');
+      mediaserver.disconnect() ;
+      t.ok(mediaserver.conn.socket === null, 'Mrf#disconnect closes socket');
+      disconnect([srf]);
+      t.end() ;
+      return;
+    })
+    .catch((err) => {
+      t.fail(err);
+    });
+}) ;
+
+test('Mrf# - custom-profile - connect using callback', (t) => {
+  t.timeoutAfter(1000);
+
+  const srf = new Srf();
+  srf.connect(config.get('drachtio-uac')) ;
+  const mrf = new Mrf(srf) ;
+
+  connect([srf])
+    .then(() => {
+      t.ok(mrf.localAddresses.constructor.name === 'Array', 'mrf.localAddresses is an array');
+
+      return mrf.connect(config.get('freeswitch-custom-profile-uac'), (err, mediaserver) => {
+        if (err) return t.fail(err);
+
+        t.ok(mediaserver.conn.socket.constructor.name === 'Socket', 'socket connected');
+        t.ok(mediaserver.srf instanceof Srf, 'mediaserver.srf is an Srf');
+        t.ok(mrf.mediaservers.length === 1, 'mrf.mediaservers is populated');
+        t.ok(mediaserver instanceof MediaServer,
+          `successfully connected to mediaserver at ${mediaserver.sip.ipv4.udp.address}`);
+        t.ok(mediaserver.hasCapability(['ipv4', 'udp']), 'mediaserver has ipv4 udp');
+        t.ok(mediaserver.hasCapability(['ipv4', 'dtls']), 'mediaserver has ipv4 dtls');
+        t.ok(!mediaserver.hasCapability(['ipv6', 'udp']), 'mediaserver does not have ipv6 udp');
+        t.ok(!mediaserver.hasCapability(['ipv6', 'dtls']), 'mediaserver does not have ipv6 dtls');
+        disconnect([srf]);
+        mediaserver.disconnect() ;
+        t.ok(mediaserver.conn.socket === null, 'Mrf#disconnect closes socket');
+        t.end() ;
+      });
+    })
+    .catch((err) => {
+      t.fail(err);
+    });
+}) ;

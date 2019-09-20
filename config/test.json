@@ -27,6 +27,12 @@
     "port": 11070,
     "secret": "ClueCon"
   },
+  "freeswitch-custom-profile-uac": {
+    "address": "127.0.0.1",
+    "port": 9081,
+    "secret": "ClueCon",
+	"profile": "custom_drachtio_mrf"
+  },
   "call-generator": {
     "uri": "sip:drachtio-sut",
     "drachtio": {
