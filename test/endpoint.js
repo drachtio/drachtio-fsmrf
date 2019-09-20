@@ -2,7 +2,7 @@ const test = require('tape').test ;
 const Srf = require('drachtio-srf') ;
 const Mrf = require('..') ;
 const config = require('config') ;
-const clearRequire = require('clear-require');
+const clearRequire = require('clear-module');
 const async = require('async');
 const Endpoint = require('../lib/endpoint');
 const EP_FILE = '/tmp/endpoint_record.wav';
@@ -456,7 +456,7 @@ test('record', (t) => {
   }
 });
 
-test('fork audio', (t) => {
+test.skip('fork audio', (t) => {
   t.timeoutAfter(15000);
 
   if (process.env.CI === 'travis') {
@@ -489,7 +489,7 @@ test('fork audio', (t) => {
       .then((mediaserver) => {
         t.pass('connected to media server');
         ms = mediaserver ;
-        return mediaserver.connectCaller(req, res);
+        return mediaserver.connectCaller(req, res, {codecs: 'PCMU'});
       })
       .then(({endpoint, dialog}) => {
         t.ok(endpoint instanceof Endpoint, 'connected incoming call to endpoint');
@@ -501,7 +501,7 @@ test('fork audio', (t) => {
         return ep.forkAudioStart({
           wsUrl: 'ws://ws-server:3001',
           mixType: 'stereo',
-          sampling: '16k',
+          sampling: '16000',
           metadata: {foo: 'bar'}
         });
       })
@@ -525,7 +525,7 @@ test('fork audio', (t) => {
         return ep.forkAudioStart({
           wsUrl: 'ws://ws-server:3001',
           mixType: 'stereo',
-          sampling: '16k'
+          sampling: '16000'
         });
       })
       .then(() => {
