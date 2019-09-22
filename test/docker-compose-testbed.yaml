@@ -53,6 +53,19 @@ services:
       drachtio-fsmrf:
         ipv4_address: 172.28.0.22
 
+  freeswitch-custom-profile-sut:
+    image: byoungdale/drachtio-freeswitch-custom-mrf-profile:latest
+    command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
+    container_name: freeswitch-custom-profile-sut
+    volumes:
+      - ./sounds:/usr/local/freeswitch/sounds
+      - ./recordings:/tmp
+    ports:
+      - "9081:8021/tcp"
+    networks:
+      drachtio-fsmrf:
+        ipv4_address: 172.28.0.23
+
   ws-server:
     image: drachtio/sample-ws-audio-fork:latest
     container_name: ws-server
