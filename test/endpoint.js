@@ -338,7 +338,23 @@ test('play and collect dtmf', (t) => {
       })
       .then(() => {
         t.pass('bridged endpoint');
-        return ep.unbridge() ;
+        return ep.mute() ;
+      })
+      .then(() => {
+        t.ok(ep.muted, 'muted endpoint');
+        return ep.unmute();
+      })
+      .then(() => {
+        t.ok(!ep.muted, 'unmuted endpoint');
+        return ep.toggleMute();
+      })
+      .then(() => {
+        t.ok(ep.muted, 'muted endpoint via toggle');
+        return ep.toggleMute();
+      })
+      .then(() => {
+        t.ok(!ep.muted, 'unmuted endpoint via toggle');
+        return ep.unbridge();
       })
       .then(() => {
         t.pass('unbridged endpoint');
