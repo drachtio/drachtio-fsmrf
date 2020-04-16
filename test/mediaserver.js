@@ -28,7 +28,7 @@ function disconnect(agents) {
 }
 
 test.skip('Mrf#connect using Promise', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -61,7 +61,7 @@ test.skip('Mrf#connect using Promise', (t) => {
 }) ;
 
 test.skip('Mrf#connect rejects Promise with error when attempting connection to non-listening port', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -82,7 +82,7 @@ test.skip('Mrf#connect rejects Promise with error when attempting connection to 
 }) ;
 
 test.skip('Mrf#connect using callback', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -138,7 +138,7 @@ test('Mrf#connect callback returns error when attempting connection to non-liste
 /* Sending custom-profile Mrf setup */
 
 test('Mrf# - custom-profile - connect using Promise', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
@@ -172,7 +172,7 @@ test('Mrf# - custom-profile - connect using Promise', (t) => {
 }) ;
 
 test('Mrf# - custom-profile - connect using callback', (t) => {
-  t.timeoutAfter(1000);
+  t.timeoutAfter(5000);
 
   const srf = new Srf();
   srf.connect(config.get('drachtio-uac')) ;
