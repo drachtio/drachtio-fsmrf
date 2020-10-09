@@ -19,7 +19,7 @@ services:
         ipv4_address: 172.28.0.10
 
   freeswitch-uac:
-    image: drachtio/drachtio-freeswitch-mrf:1.8.5-v0.2.1
+    image: drachtio/drachtio-freeswitch-mrf:v1.10.1-full
     command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
     container_name: freeswitch-uac
     volumes:
@@ -41,7 +41,7 @@ services:
         ipv4_address: 172.28.0.21
 
   freeswitch-sut:
-    image: drachtio/drachtio-freeswitch-mrf:1.8.5-v0.2.1
+    image: drachtio/drachtio-freeswitch-mrf:v1.10.1-full
     command: freeswitch --sip-port 5060 --rtp-range-start 20000 --rtp-range-end 20020
     container_name: freeswitch-sut
     volumes:

@@ -1,6 +1,6 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "delegates": "^0.1.0",
     "drachtio-modesl": "^1.2.0",
     "drachtio-srf": "^4.4.15",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "minimist": "^1.2.0",
     "moment": "^2.13.0",
     "only": "0.0.2",
@@ -38,9 +38,9 @@
   "devDependencies": {
     "blue-tape": "^1.0.0",
     "clear-module": "^4.1.1",
-    "config": "^3.3.1",
-    "nyc": "^15.0.1",
-    "tap": "^14.10.7",
+    "config": "^3.3.2",
+    "nyc": "^15.1.0",
+    "tap": "^14.10.8",
     "tap-dot": "^2.0.0",
     "tap-spec": "^5.0.0"
   }
