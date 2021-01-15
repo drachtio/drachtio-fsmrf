@@ -1,6 +1,6 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davehorton/drachtio-fsmrf.git"
+    "url": "git+https://github.com/drachtio/drachtio-fsmrf.git"
   },
   "engines": {
     "node": ">= 6.9.3"
@@ -19,21 +19,21 @@
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/davehorton/drachtio-fsmrf/issues"
+    "url": "https://github.com/drachtio/drachtio-fsmrf/issues"
   },
-  "homepage": "https://github.com/davehorton/drachtio-fsmrf#readme",
+  "homepage": "https://github.com/drachtio/drachtio-fsmrf#readme",
   "dependencies": {
     "async": "^1.4.2",
     "debug": "^2.2.0",
     "delegates": "^0.1.0",
     "drachtio-modesl": "^1.2.0",
-    "drachtio-srf": "^4.4.15",
+    "drachtio-srf": "^4.4.39",
     "lodash": "^4.17.20",
-    "minimist": "^1.2.0",
-    "moment": "^2.13.0",
+    "minimist": "^1.2.5",
+    "moment": "^2.29.1",
     "only": "0.0.2",
-    "sdp-transform": "^2.7.0",
-    "uuid": "^3.0.0"
+    "sdp-transform": "^2.14.0",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "blue-tape": "^1.0.0",
