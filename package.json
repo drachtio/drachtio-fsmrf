@@ -4,8 +4,7 @@
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
-    "start": "node app.js",
-    "jslint": "eslint lib index.js",
+    "jslint": "eslint lib",
     "test": "NODE_ENV=test node test/ | ./node_modules/.bin/tap-spec",
     "coverage": "./node_modules/.bin/nyc --reporter html --report-dir ./coverage npm run test"
   },
@@ -39,6 +38,7 @@
     "blue-tape": "^1.0.0",
     "clear-module": "^4.1.1",
     "config": "^3.3.2",
+    "eslint": "^7.19.0",
     "eslint-plugin-promise": "^4.2.1",
     "nyc": "^15.1.0",
     "tap": "^14.10.8",
