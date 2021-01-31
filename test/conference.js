@@ -40,7 +40,7 @@ test('MediaServer#createConference without specifying a name', (t) => {
 
   let mediaserver ;
 
-  connect([srf])
+  return connect([srf])
     .then(() => {
       return mrf.connect(config.get('freeswitch-uac'));
     })
@@ -57,7 +57,7 @@ test('MediaServer#createConference without specifying a name', (t) => {
       t.pass('conference destroyed');
       mediaserver.disconnect() ;
       disconnect([srf]);
-      return t.end() ;
+      return;
     })
     .catch((err) => {
       t.fail(err);
@@ -73,7 +73,7 @@ test('MediaServer#createConference using Promises', (t) => {
 
   let mediaserver ;
 
-  connect([srf])
+  return connect([srf])
     .then(() => {
       return mrf.connect(config.get('freeswitch-uac'));
     })
@@ -89,7 +89,7 @@ test('MediaServer#createConference using Promises', (t) => {
       t.pass('conference destroyed');
       mediaserver.disconnect() ;
       disconnect([srf]);
-      return t.end() ;
+      return ;
     })
     .catch((err) => {
       t.fail(err);
@@ -105,7 +105,7 @@ test('MediaServer#createConference using Callback', (t) => {
 
   let mediaserver ;
 
-  connect([srf])
+  return connect([srf])
     .then(() => {
       return mrf.connect(config.get('freeswitch-uac'));
     })
@@ -121,7 +121,7 @@ test('MediaServer#createConference using Callback', (t) => {
       t.pass('conference destroyed');
       mediaserver.disconnect() ;
       disconnect([srf]);
-      return t.end() ;
+      return ;
     })
     .catch((err) => {
       t.fail(err);

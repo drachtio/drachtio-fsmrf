@@ -1,4 +1,4 @@
-const test = require('tape').test ;
+const test = require('blue-tape').test ;
 const Srf = require('drachtio-srf') ;
 const Mrf = require('..') ;
 const config = require('config') ;

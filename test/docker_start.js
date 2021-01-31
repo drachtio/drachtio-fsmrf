@@ -1,19 +1,23 @@
-const test = require('blue-tape') ;
+const test = require('blue-tape').test ;
 const exec = require('child_process').exec ;
 const async = require('async');
 
 test('starting docker network..', (t) => {
+  t.plan(1);
   exec(`docker-compose -f ${__dirname}/docker-compose-testbed.yaml up -d`, (err, stdout, stderr) => {
-    if (-1 != stderr.indexOf('is up-to-date')) return t.end() ;
+    if (-1 != stderr.indexOf('is up-to-date')) {
+      return t.end() ;
+    }
     console.log('docker network started, giving extra time for freeswitch to initialize...');
     testFreeswitches(['freeswitch-sut', 'freeswitch-uac'], 35000, (err) => {
       if (err) {
         exec(`docker logs freeswitch-sut`, (err, stdout, stderr) => {
           console.log(stdout);
           console.log(stderr);
-        })
+          t.end(err);
+        });
       }
-      t.end(err);
+      else t.pass('docker is up');
     });
   });
 });
