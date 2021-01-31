@@ -7,7 +7,7 @@ Welcome to the Drachtio Media Resource framework, a partner module to [drachtio-
 
 drachtio-fsmrf implements common media server functions on top of Freeswitch and enables rich media applications involving IVR, conferencing and other features to be built in pure javascript without requiring in-depth knowledge of freeswitch configuration.
 
-**Note**, drachtio-fsmrf applications require a freeswitch media server, configured as per [drachtio/drachtio-freeswitch-mrf](https://cloud.docker.com/swarm/drachtio/repository/docker/drachtio/drachtio-freeswitch-mrf/general).  To build your own properly-configured Freeswitch to use with this module, either review that Dockerfile or have a look at [drachtio-mrf-ansible](https://github.com/drachtio/drachtio-mrf-ansible)
+**Note**, drachtio-fsmrf applications require a freeswitch media server, configured as per [this ansible role](https://github.com/drachtio/ansible-role-fsmrf).
 
 [API documentation for drachtio-fsmrf can be found here](http://drachtio.github.io/drachtio-fsmrf/api/index.html).
 
