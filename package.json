@@ -25,7 +25,7 @@
     "async": "^1.4.2",
     "debug": "^2.6.9",
     "delegates": "^0.1.0",
-    "drachtio-modesl": "^1.2.2",
+    "drachtio-modesl": "^1.2.4",
     "drachtio-srf": "^4.4.59",
     "lodash": "^4.17.21",
     "minimist": "^1.2.5",
