@@ -31,7 +31,7 @@
     "minimist": "^1.2.5",
     "only": "0.0.2",
     "sdp-transform": "^2.14.0",
-    "uuid": "^3.4.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "blue-tape": "^1.0.0",
