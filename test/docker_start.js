@@ -1,53 +1,40 @@
-const test = require('blue-tape').test ;
+const test = require('tape') ;
 const exec = require('child_process').exec ;
-const async = require('async');
+
+const sleepFor = async(ms) => new Promise((resolve, reject) => setTimeout(resolve, ms));
 
 test('starting docker network..', (t) => {
   t.plan(1);
-  exec(`docker-compose -f ${__dirname}/docker-compose-testbed.yaml up -d`, (err, stdout, stderr) => {
-    if (-1 != stderr.indexOf('is up-to-date')) {
-      return t.end() ;
-    }
+  exec(`docker-compose -f ${__dirname}/docker-compose-testbed.yaml up -d`, async(err, stdout, stderr) => {
+    //console.log(stderr);
     console.log('docker network started, giving extra time for freeswitch to initialize...');
-    testFreeswitches(['freeswitch-sut', 'freeswitch-uac'], 35000, (err) => {
-      if (err) {
-        exec(`docker logs freeswitch-sut`, (err, stdout, stderr) => {
-          console.log(stdout);
-          console.log(stderr);
-          t.end(err);
-        });
-      }
-      else t.pass('docker is up');
-    });
+    await testFreeswitches(['freeswitch-sut', 'freeswitch-uac'], 35000);
+    t.pass('docker is up');
   });
 });
 
-function testFreeswitches(arr, timeout, callback) {
-  let timeup = false;
+const testFreeswitches = async(arr, timeout) => {
   const timer = setTimeout(() => {
-    timeup = true;
+    throw new Error('timeout waiting for freeswitches to come up');
   }, timeout);
 
-  async.whilst(
-    () => !timeup && arr.length,
-    (callback) => setTimeout(() => async.each(arr, testOneFsw.bind(null, arr), () => callback()), 1000),
-    () => {
-      if (arr.length > 0) {
-        clearTimeout(timer);
-        return callback(new Error('some freeswitches did not initialize'));
-      }
-      callback(null);
+  do {
+    await sleepFor(5000);
+    try {
+      await Promise.all(arr.map((freeswitch) => testOneFsw(freeswitch)));
+      //console.log('successfully connected to freeswitches');
+      clearTimeout(timer);
+      return;
+    } catch (err) {
     }
-  );
-}
+  } while(true);
+};
 
-function testOneFsw(arr, fsw, callback) {
-  exec(`docker exec ${fsw} fs_cli -x "console loglevel debug"`, (err, stdout, stderr) => {
-    if (!err) {
-      console.log(`freeswitch ${fsw} is ready`);
-      const idx = arr.indexOf(fsw);
-      arr.splice(idx, 1);
-    }
-    callback(null);
+function testOneFsw(fsw) {
+  return new Promise((resolve, reject) => {
+    exec(`docker exec ${fsw} fs_cli -x "console loglevel debug"`, (err, stdout, stderr) => {
+      if (err) reject(err);
+      else resolve(err);  
+    });
   });
 }

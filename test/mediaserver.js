@@ -1,24 +1,19 @@
-const test = require('blue-tape').test ;
+const test = require('tape') ;
 const Srf = require('drachtio-srf') ;
 const Mrf = require('..') ;
 const config = require('config') ;
 const clearRequire = require('clear-module');
-const async = require('async');
 const MediaServer = require('../lib/mediaserver');
 const debug = require('debug')('drachtio:fsmrf') ;
 
 // connect the 2 apps to their drachtio servers
 function connect(agents) {
-  return new Promise((resolve, reject) => {
-    async.each(agents, (agent, callback) => {
-      agent.once('connect', (err, hostport) => {
-        callback(err) ;
-      }) ;
-    }, (err) => {
-      if (err) { return reject(err); }
-      resolve() ;
+  return Promise.all(agents.map((agent) => new Promise((resolve, reject) => {
+    agent.once('connect', (err) => {
+      if (err) reject(err);
+      else resolve();  
     });
-  });
+  })));
 }
 
 // disconnect the 2 apps

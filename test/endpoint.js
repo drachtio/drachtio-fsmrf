@@ -1,86 +1,27 @@
-const test = require('blue-tape').test ;
+const test = require('tape') ;
 const Srf = require('drachtio-srf') ;
 const Mrf = require('..') ;
 const config = require('config') ;
 const clearRequire = require('clear-module');
-const async = require('async');
 const Endpoint = require('../lib/endpoint');
 const EP_FILE = '/tmp/endpoint_record.wav';
 const EP_FILE2 = '/tmp/endpoint_record2.wav';
 
 // connect the 2 apps to their drachtio servers
-function connect(agents) {
-  return new Promise((resolve, reject) => {
-    async.each(agents, (agent, callback) => {
-      agent.once('connect', (err, hostport) => {
-        callback(err) ;
-      }) ;
-    }, (err) => {
-      if (err) { return reject(err); }
-      resolve() ;
+const connect = async(agents) => {
+  return Promise.all(agents.map((agent) => new Promise((resolve, reject) => {
+    agent.once('connect', (err) => {
+      if (err) reject(err);
+      else resolve();  
     });
-  });
-}
+  })));
+};
 
 // disconnect the 2 apps
 function disconnect(agents) {
   agents.forEach((app) => {app.disconnect();}) ;
   clearRequire('./../app');
 }
-
-
-test('MediaServer#createEndpoint create idle endpoint using callback', (t) => {
-  t.timeoutAfter(3000);
-
-  const srf = new Srf();
-  srf.connect(config.get('drachtio-uac')) ;
-  const mrf = new Mrf(srf) ;
-
-  return connect([srf])
-    .then(() => {
-      return mrf.connect(config.get('freeswitch-uac'));
-    })
-    .then((mediaserver) => {
-      return mediaserver.createEndpoint((err, endpoint) => {
-        if (err) {
-          console.log(err, 'Error creating endpoint');
-          return t.fail(err);
-        }
-        t.ok(endpoint instanceof Endpoint, 'created endpoint using callback');
-        endpoint.destroy() ;
-        mediaserver.disconnect() ;
-        disconnect([srf]);
-      });
-    });
-}) ;
-
-test('MediaServer#createEndpoint create idle endpoint using Promise', (t) => {
-  t.timeoutAfter(3000);
-
-  const srf = new Srf();
-  srf.connect(config.get('drachtio-uac')) ;
-  const mrf = new Mrf(srf) ;
-  let mediaserver ;
-
-  return connect([srf])
-    .then(() => {
-      return mrf.connect(config.get('freeswitch-uac')) ;
-    })
-    .then((ms) => {
-      mediaserver = ms ;
-      return mediaserver.createEndpoint() ;
-    })
-    .then((endpoint) => {
-      t.ok(endpoint instanceof Endpoint, 'created endpoint using Promise');
-      endpoint.destroy() ;
-      mediaserver.disconnect() ;
-      disconnect([srf]);
-      return ;
-    })
-    .catch((err) => {
-      t.fail(err);
-    });
-}) ;
 
 
 test('MediaServer#connectCaller create active endpoint using Promise', (t) => {

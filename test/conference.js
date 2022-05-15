@@ -1,9 +1,8 @@
-const test = require('blue-tape').test ;
+const test = require('tape') ;
 const Srf = require('drachtio-srf') ;
 const Mrf = require('..') ;
 const config = require('config') ;
 const clearRequire = require('clear-module');
-const async = require('async');
 const MediaServer = require('../lib/mediaserver');
 const Conference = require('../lib/conference');
 const Endpoint = require('../lib/endpoint');
@@ -12,18 +11,14 @@ const CONF_NAME2 = 'test2';
 const CONF_RECORD_FILE = 'conf-test-recording.wav';
 
 // connect the 2 apps to their drachtio servers
-function connect(agents) {
-  return new Promise((resolve, reject) => {
-    async.each(agents, (agent, callback) => {
-      agent.once('connect', (err, hostport) => {
-        callback(err) ;
-      }) ;
-    }, (err) => {
-      if (err) { return reject(err); }
-      resolve() ;
+const connect = async(agents) => {
+  return Promise.all(agents.map((agent) => new Promise((resolve, reject) => {
+    agent.once('connect', (err) => {
+      if (err) reject(err);
+      else resolve();  
     });
-  });
-}
+  })));
+};
 
 // disconnect the 2 apps
 function disconnect(agents) {
@@ -149,6 +144,7 @@ test('Connect incoming call into a conference', (t) => {
     });
 
   function handler(req, res) {
+    let conf;
     mrf.connect(config.get('freeswitch-sut'))
       .then((mediaserver) => {
         t.ok(mediaserver instanceof MediaServer, 'contacted mediaserver');
@@ -165,15 +161,11 @@ test('Connect incoming call into a conference', (t) => {
         return ms.createConference(CONF_NAME, {maxMembers: 54});
       })
       .then((conference) => {
-        t.ok(conference instanceof Conference, 'successfully created conference');
-        conf = conference ;
-        return t.shouldReject(ms.createConference(CONF_NAME), /conference exists/,
-          'create conference fails when conference by that name exists');
+        conf = conference;
+        conf.set('max_members', 100);
+        return conf;
       })
-      .then(() => {
-        return conf.set('max_members', 100);
-      })
-      .then(() => {
+      .then((conf) => {
         t.pass('set max members to 100');
         return conf.get('max_members');
       })
