@@ -69,6 +69,13 @@ test('MediaServer#connectCaller create active endpoint using Promise', (t) => {
         t.ok(vars.variable_rtp_use_codec_string.split(',').indexOf('PCMA') !== -1, 'PCMA is offered');
         t.ok(vars.variable_rtp_use_codec_string.split(',').indexOf('OPUS') !== -1, 'OPUS is offered');
 
+        return ep.play({file:'voicemail/8000/vm-record_message.wav', seekOffset: 8000, timeoutSecs: 2});
+      })
+      .then((vars) => {
+        t.ok(vars.playbackSeconds === "2", 'playbackSeconds is correct');
+        t.ok(vars.playbackMilliseconds === "2048", 'playbackMilliseconds is correct');
+        t.ok(vars.playbackLastOffsetPos === "104000", 'playbackLastOffsetPos is correct');
+        
         return ep.play('silence_stream://200');
       })
       .then(() => {
