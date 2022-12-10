@@ -1,6 +1,6 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "camel-case": "^4.1.2",
     "debug": "^2.6.9",
     "delegates": "^0.1.0",
-    "drachtio-modesl": "^1.2.4",
+    "drachtio-modesl": "^1.2.5",
     "drachtio-srf": "^4.5.18",
     "only": "^0.0.2",
     "sdp-transform": "^2.14.1",
