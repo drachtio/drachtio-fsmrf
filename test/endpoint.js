@@ -387,7 +387,6 @@ test('record', (t) => {
         return ep.set('playback_terminators', '123456789#*');
       })
       .then(() => {
-        ep.play(['silence_stream://1000', 'voicemail/8000/vm-record_message.wav']);
         promiseRecord = ep.record(EP_FILE2, {timeLimitSecs: 3});
         t.pass('started recording');
         return uac.generateSilence(2000);
