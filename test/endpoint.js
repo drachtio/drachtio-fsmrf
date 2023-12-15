@@ -311,13 +311,13 @@ test('play and collect dtmf', (t) => {
       })
       .then(() => {
         t.pass('set a single value');
-        return ep.export({
+        return ep.set({
           'playback_terminators': '*',
           'recording_follow_transfer': true
         });
       })
       .then((evt) => {
-        t.pass('export multiple values');
+        t.pass('set multiple values');
         ep.destroy() ;
         ep2.destroy() ;
         dlg.destroy() ;
