@@ -202,10 +202,16 @@ test('MediaServer#connectCaller add custom event listeners', (t) => {
         t.throws(ep.addCustomEventListener.bind(ep, 'example::event'), 'throws if handler is not present');
         t.throws(ep.addCustomEventListener.bind(ep, 'example::event', 'foobar'), 'throws if handler is not a function');
         t.throws(ep.addCustomEventListener.bind(ep, 'CUSTOM example::event'), 'throws if incorrect form of event name used');
+        const listener = (args) => {};
         ep.addCustomEventListener('example::event', (args) => {});
+        ep.addCustomEventListener('example::event', listener);
         t.equals(ep._customEvents.length, 1, 'successfully adds custom event listener');
+        t.equals(ep.listenerCount('example::event'), 2, 'successfully adds custom event listener');
+        ep.removeCustomEventListener('example::event', listener);
+        t.equals(ep._customEvents.length, 1, 'successfully removes 1 listener');
+        t.equals(ep.listenerCount('example::event'), 1, 'successfully removes 1 listener');
         ep.removeCustomEventListener('example::event');
-        t.equals(ep._customEvents.length, 0, 'successfully removes custom event listener');        
+        t.equals(ep._customEvents.length, 0, 'successfully removes custom event listener');
         return;
       })
       .then(() => {
