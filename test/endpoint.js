@@ -474,7 +474,7 @@ test.skip('fork audio', (t) => {
           mixType: 'stereo',
           sampling: '16000',
           metadata: {foo: 'bar'},
-          bi_audio_sample_rate: 8000
+          bidirectionalAudioSampleRate: 8000
         });
       })
       .then(() => {
