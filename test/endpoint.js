@@ -473,7 +473,8 @@ test.skip('fork audio', (t) => {
           wsUrl: 'ws://ws-server:3001',
           mixType: 'stereo',
           sampling: '16000',
-          metadata: {foo: 'bar'}
+          metadata: {foo: 'bar'},
+          bidirectionalAudioSampleRate: 8000
         });
       })
       .then(() => {
