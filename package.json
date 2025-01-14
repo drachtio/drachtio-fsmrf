@@ -1,6 +1,6 @@
 {
   "name": "drachtio-fsmrf",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "freeswitch-based media resource function for drachtio",
   "main": "lib/mrf.js",
   "scripts": {
