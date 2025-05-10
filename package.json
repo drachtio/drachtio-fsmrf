@@ -23,7 +23,7 @@
   "homepage": "https://github.com/drachtio/drachtio-fsmrf#readme",
   "dependencies": {
     "camel-case": "^4.1.2",
-    "debug": "^2.6.9",
+    "debug": "^4.4.0",
     "delegates": "^0.1.0",
     "drachtio-modesl": "^1.2.9",
     "drachtio-srf": "^5.0.1",
