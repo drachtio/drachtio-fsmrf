@@ -507,6 +507,28 @@ test.skip('fork audio', (t) => {
       .then((evt) => {
         return ep.forkAudioStop();
       })
+      // pause, resume
+      .then(() => {
+         t.pass('stopped forking audio with no metadata');
+        return ep.forkAudioStart({
+          wsUrl: 'ws://ws-server:3001',
+          mixType: 'stereo',
+          sampling: '16000'
+        });
+      })
+      .then(() => {
+        t.pass('started forking audio with no metadata');
+        return uac.playFile('voicemail/16000/vm-record_message.wav');
+      })
+       .then((evt) => {
+        return ep.forkAudioPause('background_record', true);
+      })
+       .then((evt) => {
+        return ep.forkAudioResume();
+      })
+      .then((evt) => {
+        return ep.forkAudioStop();
+      })
       .then(() => {
         t.pass('stopped forking audio with no metadata');
         return ;
