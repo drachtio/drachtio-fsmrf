@@ -521,7 +521,7 @@ test.skip('fork audio', (t) => {
         return uac.playFile('voicemail/16000/vm-record_message.wav');
       })
        .then((evt) => {
-        return ep.forkAudioPause(true);
+        return ep.forkAudioPause('background_record', true);
       })
        .then((evt) => {
         return ep.forkAudioResume();
