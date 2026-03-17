@@ -5,7 +5,7 @@ const sleepFor = async(ms) => new Promise((resolve, reject) => setTimeout(resolv
 
 test('starting docker network..', (t) => {
   t.plan(1);
-  exec(`docker-compose -f ${__dirname}/docker-compose-testbed.yaml up -d`, async(err, stdout, stderr) => {
+  exec(`docker compose -f ${__dirname}/docker-compose-testbed.yaml up -d`, async(err, stdout, stderr) => {
     //console.log(stderr);
     console.log('docker network started, giving extra time for freeswitch to initialize...');
     await testFreeswitches(['freeswitch-sut', 'freeswitch-uac'], 35000);

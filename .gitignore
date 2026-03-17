@@ -37,3 +37,5 @@ test/recordings/*.wav
 test/recordings/*.raw
 .DS_Store
 
+CLAUDE.md
+.vscode
