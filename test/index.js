@@ -1,3 +1,4 @@
+require('./utils');
 require('./docker_start');
 require('./mediaserver');
 require('./endpoint');
